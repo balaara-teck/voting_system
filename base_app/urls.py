@@ -7,5 +7,5 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('voter_register/', views.VoterRegisterView.as_view(), name='voter_register'),
     path("voter_card/",views.voter_card,name="votercard"),
-    path("election_officer/",views.ElectorialCommissionOfficerView.as_view(),name="election-Officer")
+    path("election_officer/",views.ElectorialCommissionOfficerView.as_view(),name="election-Officer"),
 ]
