@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login
 from .forms import UserLoginForm,UserRegistrationForm,VoterRegisterationForm,ElectorialCommissionOfficerForm
 from django.views.generic import CreateView
 from .models import VoterRegistrationModel,ElectionDayModel,ElectorialCommissionOfficerModel
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy,reverse 
 from django.contrib.auth.mixins import LoginRequiredMixin
 import random
 import string
@@ -24,12 +24,17 @@ class VoterRegisterView(LoginRequiredMixin,CreateView):
     form_class = VoterRegisterationForm
     template_name = 'register_voter.html'
     login_url = reverse_lazy("login")
-    success_url = reverse_lazy("home")
+    success_url = ""
  
-    def form_valid(self, form,pk):
-        form.instance.election_name = ElectorialCommissionOfficerModel.objects.get(id = pk)
+    def form_valid(self, form):
+        pk = self.kwargs.get('pk')
+        form.instance.election_name = ElectorialCommissionOfficerModel.objects.get(user = self.request.user, id = pk)
         form.instance.voter_id = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
         return super().form_valid(form)
+
+    def get_success_url(self):
+        pk = self.kwargs.get('pk')
+        return reverse('voter_register', kwargs={'pk': pk})
     
 class ElectorialCommissionOfficerView(LoginRequiredMixin, CreateView):
     model = ElectorialCommissionOfficerModel

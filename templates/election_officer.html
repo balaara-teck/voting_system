@@ -14,22 +14,16 @@
 
   {% if existing_elections %}
     <h3>Select Existing Election</h3>
-    <form method="post" action="#">
-      {% csrf_token %}
       <div>
-        <label for="existing_election">Existing Elections:</label>
-        <select name="existing_election" id="existing_election">
+        <h5>Existing Elections:</h5>
           {% for election in existing_elections %}
-            <option value="{{ election.id }}">{{ election.election_name }}</option>
+            <a href="{% url 'voter_register' election.id %}">{{ election.election_name }}</a><br>
           {% endfor %}
-        </select>
       </div>
-      <button type="submit">Select</button>
-    </form>
   {% endif %}
 
   <h3>Or Create New Election</h3>
-  <form method="post" action="#">
+  <form method="post" action="#" nonvalidate>
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Create</button>
