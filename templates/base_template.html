@@ -1,0 +1,40 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'base_template.css' %}">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo"><a href="#">Logo</a></div>
+            <div class="links"> 
+                <div class="access_link">
+                    <p><a href="#">Home</a></p>
+                    <p><a href="#">Terms</a></p>
+                    <p><a href="#">Policy</a></p>
+                    <p><a href="#">Pricing</a></p>
+                    <p><a href="#">Contact</a></p>
+                </div>
+                <div class="authentication_links">
+                    <p><a href="#">Sign In</a></p>
+                    <button><a href="#">Sign Up</a></button>
+                </div>
+
+            </div>
+        </nav>
+    </header>
+    {% block content %}
+    <!-- Site functionlities are all here -->
+    <a href="{% url 'login' %}">Sign In</a><br>
+    <a href="{% url 'register' %}">Sign Up</a><br>
+    <a href="{% url 'voter_register' %}">Register As Voter</a><br>
+    <a href="{% url 'votercard' %}">My voting card</a><br>
+    <a href="{% url 'election-Officer' %}">My Election</a>  
+    {% endblock %}
+</body>
+</html>

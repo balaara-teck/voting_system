@@ -1,0 +1,38 @@
+{% extends "base_template.html" %}
+
+{% block title %}
+{%if template == "register.html"%}
+Register | Voting
+{%else%}
+Login | Voting
+{%endif%}
+{%endblock title%}
+
+
+
+
+{% block content %}
+
+<div style="max-width: 300px;margin: 0 auto;">
+    <a href="{% url 'login' %}">Login</a>
+    <a href="{% url 'register' %}">Register</a>
+<h1>{%if template == "register.html"%}Register{%else%}Login{%endif%}</h1>
+<form method="POST" novalidate>
+    {% csrf_token %}
+    {% for field in form %}
+    <div style="margin-bottom: 10px;width: 100%;display: flex;flex-direction: column;">
+        {% for error in field.errors %}
+        <p style="color: red;">{{ error }}</p>
+        {% endfor %}
+        {{ field }}
+        {% if field.help_text %}
+        <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+       
+    </div>
+    {% endfor %}
+    
+    <button class="send" type="submit">{%if template == "register.html"%}Register{%else%}Login{%endif%}</button>
+</form>
+</div>
+{% endblock %}

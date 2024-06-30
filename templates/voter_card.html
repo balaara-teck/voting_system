@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> voting card</title>
+</head>
+<body>
+    {% if voter %}
+    <h3>{{voter.first_name}} {{voter.last_name}}</h3>
+    <p>Voter ID: {{voter.voter_id}}</p>
+    {%else%}
+    <p>You are note a registered voter</p>
+    {%endif%}
+</body>
+</html> 

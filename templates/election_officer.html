@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elections Officer</title>
+</head>
+<body>
+    <a href="{% url 'login' %}">Sign In</a>
+    <a href="{% url 'register' %}">Sign Up</a>
+   
+
+  <h2>Create or Select an Election</h2>
+
+  {% if existing_elections %}
+    <h3>Select Existing Election</h3>
+    <form method="post" action="#">
+      {% csrf_token %}
+      <div>
+        <label for="existing_election">Existing Elections:</label>
+        <select name="existing_election" id="existing_election">
+          {% for election in existing_elections %}
+            <option value="{{ election.id }}">{{ election.election_name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <button type="submit">Select</button>
+    </form>
+  {% endif %}
+
+  <h3>Or Create New Election</h3>
+  <form method="post" action="#">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create</button>
+  </form>
+
+
+</body>
+</html>

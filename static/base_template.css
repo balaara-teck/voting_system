@@ -1,0 +1,35 @@
+* {
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    background-color: rgb(50, 50, 50);
+    color: aliceblue;
+}
+
+.links,.access_link,.authentication_links {
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.links {
+    justify-content: space-between;
+    column-gap:40px ;  
+}
+
+.access_link {
+    column-gap:20px ; 
+}
+
+.navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+

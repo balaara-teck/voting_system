@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Voter Registration Form</title>
+</head>
+<body>
+    <a href="{% url 'login' %}">Sign In</a>
+    <a href="{% url 'register' %}">Sign Up</a>
+    <h1>Voter Registration Form</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+
+</body>
+</html>
