@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from .forms import UserLoginForm,UserRegistrationForm,VoterRegisterationForm,ElectorialCommissionOfficerForm
 from django.views.generic import CreateView
-from .models import VoterRegistrationModel,ElectionDayModel,ElectorialCommissionOfficerModel
+from .models import VoterRegistrationModel,ElectorialCommissionOfficerModel
 from django.urls import reverse_lazy,reverse 
 from django.contrib.auth.mixins import LoginRequiredMixin
 import random
@@ -24,8 +24,7 @@ class VoterRegisterView(LoginRequiredMixin,CreateView):
     form_class = VoterRegisterationForm
     template_name = 'register_voter.html'
     login_url = reverse_lazy("login")
-    success_url = ""
- 
+    
     def form_valid(self, form):
         pk = self.kwargs.get('pk')
         form.instance.election_name = ElectorialCommissionOfficerModel.objects.get(user = self.request.user, id = pk)
@@ -41,7 +40,7 @@ class ElectorialCommissionOfficerView(LoginRequiredMixin, CreateView):
     form_class = ElectorialCommissionOfficerForm
     template_name = 'election_officer.html'
     login_url = reverse_lazy("login")
-    success_url = reverse_lazy("home")
+    
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -52,8 +51,8 @@ class ElectorialCommissionOfficerView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         form.instance.election_name = form.instance.election_name.lower()
-        if ElectorialCommissionOfficerModel.objects.filter(election_name=form.instance.election_name, user=self.request.user).exists():
-            form.add_error('election_name', f'{self.request.user.username.capitalize()}, you already have an election account with the name "{form.instance.election_name}"')
+        if ElectorialCommissionOfficerModel.objects.filter(election_name=form.instance.election_name).exists():
+            form.add_error('election_name', f'{self.request.user.username.capitalize()}, an election account with the name "{form.instance.election_name}" exists')
             return self.form_invalid(form)
         return super().form_valid(form)
 
@@ -64,6 +63,10 @@ class ElectorialCommissionOfficerView(LoginRequiredMixin, CreateView):
             if ElectorialCommissionOfficerModel.objects.filter(id=existing_election_id, user=request.user).exists():
                 return redirect(self.success_url)
         return super().post(request, *args, **kwargs)
+    
+    def get_success_url(self):
+        return reverse('voter_register', kwargs={'pk': self.object.pk})
+    
     
 
     

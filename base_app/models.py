@@ -32,9 +32,6 @@ class VoterRegistrationModel(models.Model):
         return self.first_name + " " + self.last_name
 
 
-class ElectionDayModel(models.Model):
-    election_name = models.OneToOneField(ElectorialCommissionOfficerModel, on_delete=models.CASCADE,default=1)
-    start_time = models.DateField(auto_now_add=True)
-    end_time = models.DateField()
+
 
 

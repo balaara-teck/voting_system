@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import VoterRegistrationModel,ElectionDayModel,ElectorialCommissionOfficerModel
+from .models import VoterRegistrationModel,ElectorialCommissionOfficerModel
 
 from django.db import models
 
