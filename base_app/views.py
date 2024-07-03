@@ -55,14 +55,6 @@ class ElectorialCommissionOfficerView(LoginRequiredMixin, CreateView):
             form.add_error('election_name', f'{self.request.user.username.capitalize()}, an election account with the name "{form.instance.election_name}" exists')
             return self.form_invalid(form)
         return super().form_valid(form)
-
-    def post(self, request, *args, **kwargs):
-        # If the user selects an existing election, redirect to the success URL
-        if 'existing_election' in request.POST:
-            existing_election_id = request.POST.get('existing_election')
-            if ElectorialCommissionOfficerModel.objects.filter(id=existing_election_id, user=request.user).exists():
-                return redirect(self.success_url)
-        return super().post(request, *args, **kwargs)
     
     def get_success_url(self):
         return reverse('voter_register', kwargs={'pk': self.object.pk})
