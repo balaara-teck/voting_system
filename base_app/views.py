@@ -2,7 +2,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
-from .forms import UserLoginForm,UserRegistrationForm,VoterRegisterationForm,ElectorialCommissionOfficerForm
+from .forms import UserLoginForm,UserRegistrationForm,VoterRegisterationForm,ElectorialCommissionOfficerForm,ElectionSearchForm
 from django.views.generic import CreateView
 from .models import VoterRegistrationModel,ElectorialCommissionOfficerModel
 from django.urls import reverse_lazy,reverse 

@@ -5,15 +5,18 @@ from .models import VoterRegistrationModel,ElectorialCommissionOfficerModel
 
 from django.db import models
 
+class ElectionSearchForm(forms.Form):
+    search_query = forms.CharField(max_length=100, required=False, label='Search Elections')
+
 
 
 class UserRegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
-    username = forms.CharField(label='Username', widget=forms.TextInput(attrs={'placeholder': 'Username'}))
-    email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
+    username = forms.CharField(label='Username', widget=forms.TextInput(attrs={'placeholder': 'Enter username'}))
+    email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'placeholder': 'Enter email'}))
+    password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'placeholder': 'Enter password'}))
     password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}))
  
 
@@ -21,8 +24,8 @@ class UserLoginForm(forms.Form):
     class Meta:
         model = User
         fields = ['username', 'password']
-    username = forms.CharField(label='Username', widget=forms.TextInput(attrs={'placeholder': 'Username'}))
-    password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
+    username = forms.CharField(label='Username', widget=forms.TextInput(attrs={'placeholder': 'Enter username'}))
+    password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'placeholder': 'Enter password'}))
    
 class ElectorialCommissionOfficerForm(forms.ModelForm):
     class Meta:
