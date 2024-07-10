@@ -1,0 +1,58 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    background-color: rgb(240, 240, 240);
+    
+}
+
+
+nav {
+    box-shadow: 20px 20px 20px rgba(155, 106, 106, 0.1);
+    
+    
+}
+
+.search-box {
+    border: 1px solid rgb(155, 106, 106);
+    background-color: rgb(240, 240, 240);
+    border-radius: 20px;
+    padding-left: 10px;
+}
+
+.signup {
+   margin-left:6px;
+}
+/* end of nav */
+.site-summary {
+ font-weight: 700;
+}
+
+
+
+footer a {
+    text-decoration: none;
+    color: black;
+    
+}
+
+
+
+footer a:hover {
+    text-decoration: underline;
+    color: blue;
+    font-style: italic;
+}
+
+.logo {
+    width: 100px;
+}
+
+footer img {
+    width: 25px;
+}
+

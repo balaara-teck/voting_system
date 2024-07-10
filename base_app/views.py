@@ -1,14 +1,19 @@
-
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.contrib.auth import authenticate, login
-from .forms import UserLoginForm,UserRegistrationForm,VoterRegisterationForm,ElectorialCommissionOfficerForm,ElectionSearchForm
+from django.contrib.auth import authenticate, login,logout
+from .forms import UserLoginForm,UserRegistrationForm,VoterRegisterationForm,ElectorialCommissionOfficerForm
 from django.views.generic import CreateView
-from .models import VoterRegistrationModel,ElectorialCommissionOfficerModel
+from .models import VoterRegistrationModel,ElectorialCommissionOfficerModel,PortfolioModel
 from django.urls import reverse_lazy,reverse 
 from django.contrib.auth.mixins import LoginRequiredMixin
 import random
 import string
+
+
+
+
+def home(request):
+   portfolios = PortfolioModel.objects.all()
+   return render(request, 'index.html',{'portfolios': portfolios})
 
 def voter_card(request):
     try:
@@ -59,11 +64,6 @@ class ElectorialCommissionOfficerView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('voter_register', kwargs={'pk': self.object.pk})
     
-    
-
-    
-def home(request):
-   return render(request, 'base_template.html')
 
 def login_view(request):
     form = UserLoginForm()
@@ -75,7 +75,7 @@ def login_view(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return home(request)  # Redirect to a success page
+                return redirect("home")  # Redirect to a success page
     return render(request, 'register_login.html', {'form': form})
 
 def register(request):
@@ -89,4 +89,27 @@ def register(request):
             user.save()
             return redirect('login')     
     return render(request, 'register_login.html', {'form': form,"template":tempate})
+
+def logout_view(request):
+    logout(request)
+    return redirect("home")
+
+class PortfolioView(LoginRequiredMixin,CreateView):
+    model = PortfolioModel
+    template_name = "portfolio.html"
+    fields = ["portfolio_name"]
+    login_url = reverse_lazy("login") 
+
+    def form_valid(self, form):
+        pk = self.kwargs.get('pk')
+        form.instance.election_name = ElectorialCommissionOfficerModel.objects.filter(user=self.request.user, id=pk)
+        form.instance.portfolio_name = form.instance.portfolio_name.capitalize()
+        if PortfolioModel.objects.filter(portfolio_name=form.instance.portfolio_name).exists():
+            form.add_error("portfolio",f"This portfolio already exist")    
+        return super(PortfolioView,self).form_valid(form)
+    
+    def get_success_url(self):
+        pk = self.kwargs.get('pk')
+        return reverse('portfolios', kwargs={'pk': pk})
+        
 

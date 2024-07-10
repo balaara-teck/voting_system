@@ -1,0 +1,38 @@
+{%extends 'base_template.html'%}
+
+{%block title%}Home | BilotBlitz{%endblock title%}
+
+{%block header%}
+<header>
+  {%include 'header.html'%}
+</header>
+{%endblock header%}
+
+{%block content%}
+<main>
+<div class="container">
+  <div class="row">      
+      <div class="col-12 col-lg-6 ">
+          <h1 class="text-center text-lg-start">Welcome To BilotBlitz!</h1>
+          <p  class="text-center text-lg-start">We provide steps that make election <strong>simple, </strong><strong>fast,</strong>, <strong>secure,</strong><strong>accessible,</strong>
+          and above all <strong>affordable.</strong></p>
+          <a class="btn btn-outline-dark mt-2 d-none d-lg-inline" href="#" type="button">Read More</a>
+      </div>
+      <div class="col-12 col-lg-6 text-center">
+      <h1 class="mt-5 mt-lg-0">Why Here?</h1>
+      <a class="btn btn-outline-dark mt-2" href="#" type="button">As a Voter</a>
+      <a class="btn btn-outline-primary mt-2" href="{% url 'election-Officer' %}" type="button">As an Officer</a>
+      </div>     
+  </div>
+</div>
+<div >
+  {%include 'site_visual.html'%}
+</div>
+</main>
+{%endblock content%}
+
+{%block footer%}
+<footer>
+  {%include 'footer.html'%}
+</footer>
+{%endblock footer%}

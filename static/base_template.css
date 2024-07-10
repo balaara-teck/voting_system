@@ -61,3 +61,24 @@ small {
     background-color: #343a40;
     color: white;
 }
+
+.portfolio {
+    display: flex;
+    align-items: center;
+}
+
+.portfolio-title {
+    font-size: 1.25rem;
+    margin-right: 10px;
+}
+
+.portfolio-lists {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+}
+
+.portfolio-item {
+    white-space: nowrap;
+    margin-right: 10px;
+}

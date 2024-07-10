@@ -1,34 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elections Officer</title>
-</head>
-<body>
-    <a href="{% url 'login' %}">Sign In</a>
-    <a href="{% url 'register' %}">Sign Up</a>
-   
+{%extends 'index.html'%}
 
-  <h2>Create or Select an Election</h2>
+  {%block title%}My Elections | BilotBlitz{%endblock title%}
 
-  {% if existing_elections %}
-    <h3>Select Existing Election</h3>
-      <div>
-        <h5>Existing Elections:</h5>
-          {% for election in existing_elections %}
-            <a href="{% url 'voter_register' election.id %}">{{ election.election_name }}</a><br>
-          {% endfor %}
+  {%block content%}
+  <main>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h1 class="text-center display-1">My Elections</h1>
+        </div>
       </div>
-  {% endif %}
+      <div class="row">
+        <div class="col-12 col-md-6 ">
+        {% if existing_elections %}
+          <div>
+            <h3 class="text-center text-sm-start mb-3">Existing Elections:</h3>
+            {% for election in existing_elections %}
+              <p  class="text-center text-sm-start"><a href="{% url 'voter_register' election.id %}">{{ election.election_name }}</a></p>        
+            {% endfor %}
+          </div>
+        {% else %}
+            <h3 class="text-center text-sm-start">No Existing Election</h3>
+        {% endif %}
+        </div>
+        <div class="col-12 col-md-6 ">
+          <h3>Create New Election Instead?</h3>
+          <form method="post" action="#" nonvalidate>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Create</button>
+          </form>
+        </div>
+      </div>
+    </div>
 
-  <h3>Or Create New Election</h3>
-  <form method="post" action="#" nonvalidate>
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Create</button>
-  </form>
-
-
-</body>
-</html>
+    <div >
+      {%include 'site_visual.html'%}
+    </div>
+</main>
+  {%endblock content%}

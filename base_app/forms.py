@@ -3,12 +3,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import VoterRegistrationModel,ElectorialCommissionOfficerModel
 
-from django.db import models
-
-class ElectionSearchForm(forms.Form):
-    search_query = forms.CharField(max_length=100, required=False, label='Search Elections')
-
-
 
 class UserRegistrationForm(UserCreationForm):
     class Meta:
@@ -54,5 +48,3 @@ class VoterRegisterationForm(forms.ModelForm):
         }
 
 
-class ElectoralCommissionForm(forms.Form):
-    user = forms
