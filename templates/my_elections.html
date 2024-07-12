@@ -1,0 +1,55 @@
+{%extends 'index.html'%}
+
+  {%block title%}My Elections | BilotBlitz{%endblock title%}
+
+  {%block content%}
+  <main>
+    <div class="container">
+      <div class="row pt-lg-4 pb-lg-4">
+        <div class="col-12">
+          <h1 class="text-center display-1">My Elections</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6 ">
+        {% if existing_elections %}
+          <div>
+            <h2 class="text-center text-sm-start mb-3">Existing Elections:</h2>
+            
+              <ol  class="m-2 text-center text-sm-start align-items-left">
+                {% for election in existing_elections %}
+                <li>
+                  <a class="text-decoration-none" href="{% url 'voter_register' election.id %}">
+                    {{ election.election_name}}
+                  </a>
+                </li>
+                {% endfor %}
+              </ol>        
+          </div>
+        {% else %}
+            <h2 class="text-center text-sm-start mb-5">No Existing Election</h2>
+        {% endif %}
+        </div>
+        <div class="col-12 col-md-6 new_election">
+          <h2 class="text-center text-sm-start mb-3">Create New Election Instead?</h2>
+          <form method="post" action="#" class="text-center text-sm-start" nonvalidate>
+            {% csrf_token %}
+            {% for field in form %}
+            {%if field.errors%}
+            {%for error in field.errors%}
+            <small class="text-danger mb-5">{{ error }}</small>
+            {%endfor%}
+            {%endif%}
+            <p class="mb-1 mt-3">Enter the name of the new election:</p>
+            {{ field }}
+            {% endfor %}
+            <button type="submit" class="btn btn-info">Create</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div >
+      {%include 'site_visual.html'%}
+    </div>
+</main>
+  {%endblock content%}

@@ -24,22 +24,28 @@ nav {
     padding-left: 10px;
 }
 
+.new_election input {
+    border: 1px solid rgb(155, 106, 106);
+    background-color: rgb(240, 240, 240);
+    height: 37px;
+    border-radius: 4px;
+    padding-left:10px;
+    margin-top: 3px;
+}
+
 .signup {
    margin-left:6px;
 }
 /* end of nav */
 .site-summary {
- font-weight: 700;
+    font-weight: 700;
 }
-
-
 
 footer a {
     text-decoration: none;
     color: black;
     
 }
-
 
 
 footer a:hover {
@@ -55,4 +61,10 @@ footer a:hover {
 footer img {
     width: 25px;
 }
+/* end of footer */
 
+/* election styles */
+.existing_elections {
+    
+ 
+}

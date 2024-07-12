@@ -25,7 +25,7 @@ class ElectorialCommissionOfficerForm(forms.ModelForm):
     class Meta:
         model = ElectorialCommissionOfficerModel
         fields = ["election_name"]
-    election_name = forms.CharField(label='Election name', widget=forms.TextInput(attrs={'placeholder': 'Election Name'}))
+    election_name = forms.CharField(label='Election name', widget=forms.TextInput(attrs={'placeholder': ' Enter election Name'}))
     
 
 class VoterRegisterationForm(forms.ModelForm):
@@ -33,18 +33,6 @@ class VoterRegisterationForm(forms.ModelForm):
         model = VoterRegistrationModel
         fields = ['first_name', 'last_name',"email", 'date_of_birth', 'address', 'city', 'state',
                    'zip_code', 'phone_number']
-        widgets = {
-            'first_name': forms.TextInput(attrs={'placeholder': 'First Name'}),
-            'last_name': forms.TextInput(attrs={'placeholder': 'Last Name'}),
-            'email': forms.EmailInput(attrs={'placeholder': 'email'}),
-            'date_of_birth': forms.DateInput(attrs={'placeholder': 'Date of Birth'}),
-            'address': forms.TextInput(attrs={'placeholder': 'Address'}),
-            'city': forms.TextInput(attrs={'placeholder': 'City'}),
-            'state': forms.TextInput(attrs={'placeholder': 'State'}),
-            'zip_code': forms.TextInput(attrs={'placeholder': 'Zip Code'}),
-            'phone_number': forms.TextInput(attrs={'placeholder': 'Phone Number'}),
-            'email': forms.EmailInput(attrs={'placeholder': 'email'}),
 
-        }
 
 
