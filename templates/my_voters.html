@@ -9,7 +9,7 @@
     
     <ol>
         {%for voter in voters%}
-        <li>{{voter.first_name}}</li>
+        <li>{{voter.first_name}} {{voter.last_name}} {{voter.voter_id}}</li>
         {%endfor%}
     </ol>
 </body>

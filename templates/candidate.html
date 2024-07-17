@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
+    <title>Candidates</title>
 </head>
 <body>
     <form method="POST" novalidate>
@@ -17,16 +17,14 @@
                 </small>
                 {% endfor%}
             {% endif %}
-            {{field.label_tag}}<br>
             {{field}}      
         </div>
         {%endfor%}
         <input type="submit" value="Create" >
     </form>
-   
     <ol>
-        {%for portfolio in portfolios%}
-        <li>{{portfolio.portfolio_name}}</li>
+        {%for candidate in candidates%}
+        <li>{{candidate.candidate.first_name}} {{candidate.candidate.last_name}} {{candidate.portfolio_name.portfolio_name}}</li>
         {%endfor%}
     </ol>
 </body>

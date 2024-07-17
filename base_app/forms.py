@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import VoterRegistrationModel,ElectorialCommissionOfficerModel
+from .models import VoterRegistrationModel,ElectorialCommissionOfficerModel,PortfolioModel,CandidateModel
 
 
 class UserRegistrationForm(UserCreationForm):
@@ -26,6 +26,20 @@ class ElectorialCommissionOfficerForm(forms.ModelForm):
         model = ElectorialCommissionOfficerModel
         fields = ["election_name"]
     election_name = forms.CharField(label='Election name', widget=forms.TextInput(attrs={'placeholder': ' Enter election Name'}))
+    
+class PortfolioForm(forms.ModelForm):
+    class Meta:
+        model = PortfolioModel
+        fields = ["portfolio_name"]
+    portfolio_name = forms.CharField(label='portfolio name', widget=forms.TextInput(attrs={'placeholder': ' Enter portfolio Name'}))
+    
+class CandidateForm(forms.ModelForm):
+    class Meta:
+        model = CandidateModel
+        fields = ["email","portfolio_name"]
+    email = forms.CharField(label='Email', widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
+    
+
     
 
 class VoterRegisterationForm(forms.ModelForm):

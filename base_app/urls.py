@@ -10,5 +10,7 @@ urlpatterns = [
     path("logout/",views.logout_view,name="logout"),
     path("my_elections/",views.ElectorialCommissionOfficerView.as_view(),name="my_elections"),
     path("my_elections/<str:pk>/voters",views.voters.as_view(),name="voters"),
-    path('portfolios/', views.PortfolioView.as_view(), name='portfolios'),
+    path('portfolios/<int:pk>', views.PortfolioView.as_view(), name='portfolios'),
+    path('candidates/<int:pk>', views.CandidateView.as_view(), name='candidates'),
+
 ]
