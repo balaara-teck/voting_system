@@ -15,13 +15,13 @@
                 <button class="btn btn-info" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">About This Election</button>
 
                 <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Backdrop with scrolling</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Backdrop with scrolling</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
                     <div class="offcanvas-body">    
                         <p><a href="{% url 'voters' election.id %}">
-                          <b>Number of Voters</a>: {{voters}}</b> 
+                            <b>Number of Voters</a>: {{voters}}</b> 
                         </p>
                         <p>
                             <a href="{% url 'my_elections' %}"><b>Switch Election</b></a>
@@ -32,28 +32,27 @@
                         <p>
                             <b class="text-info">Start Voting</b>
                         </p>
-                       
+                        
                     </div>
                 </div>
             </div>
-            <div class="col d-none d-md-inline text-center">
-                <strong class="text-info">
-                    <a href="{% url 'voters' election.id %}">
+            <div class="col d-none d-md-inline text-center text-white">
+                <strong>
+                    <a href="{% url 'voters' election.id %}" class="text-info text-decoration-none">
                     Number of Voters</a>:        
                 </strong> {{voters}}
             </div>
              
             <div class="col d-none d-md-inline text-center">
-                <a href="{% url 'my_elections' %}"><strong class="text-info">Switch Election</strong></a> 
+                <a href="{% url 'my_elections' %}" class="text-decoration-none text-info"><strong>Switch Election</strong></a> 
             </div>
             <div class="col d-none d-md-inline text-center">
-                <a href="{% url 'portfolios' election.id %}">  
+                <a class="text-decoration-none text-info" href="{% url 'portfolios' election.id %}">  
                 <strong class="text-info">Create Portfolios</strong>
                 </a> 
-              </div>
-            
+            </div> 
             <div class="col d-none d-md-inline text-center">
-                <a href="{% url 'candidates' election.id %}">
+                <a class="text-decoration-none text-info" href="{% url 'candidates' election.id %}">
                     <strong class="text-info">Register Candidates</strong>
                 </a>
             </div>
@@ -62,10 +61,9 @@
             </div>
         </div>            
     </div>
-
-<div class="container mt-5">
-    <h2 class="mb-4 text-center">{{election.election_name |capfirst}} Election Voter Registration</h2>
-    {% for field in form %}
+    <div class="container mt-5">
+        <h1 class="mb-4 text-center text-white">{{election.election_name |title}} Election Voter Registration</h1>
+        {% for field in form %}
         <div class="form-group">
             {% for error in field.errors %}
             <div class="alert alert-danger text-center" role="alert">
@@ -73,61 +71,61 @@
             </div>
             {% endfor %}    
         </div>   
-    {% endfor %}
-    {% for field in messages %}
+        {% endfor %}
+        {% for field in messages %}
         <div class="form-group">
             <div class="alert alert-success text-center" role="alert">
                 {{field}}
-              </div>    
+            </div>    
         </div>   
-    {% endfor %}
+        {% endfor %}
     <form method="post">
         {% csrf_token %}
-        <div class="row">
+        <div class="row text-white voterform">
            <div class="col-12 col-sm-6">
-
-            <div class="form-group">
-                <label for="id_first_name">First Name</label>
-                <input type="text" class="form-control" id="id_first_name" name="first_name" required>
+                <div class="form-group">
+                    <label for="id_first_name">First Name</label>
+                    <input type="text" class="form-control" id="id_first_name" name="first_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="id_last_name">Last Name</label>
+                    <input type="text" class="form-control" id="id_last_name" name="last_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="id_email">Email</label>
+                    <input type="email" class="form-control" id="id_email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="id_date_of_birth">Date of Birth</label>
+                    <input type="date" class="form-control" id="id_date_of_birth" name="date_of_birth" required>
+                </div>  
+                <div class="form-group">
+                    <label for="id_address">Address</label>
+                    <input type="text" class="form-control" id="id_address" name="address" required>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="id_last_name">Last Name</label>
-                <input type="text" class="form-control" id="id_last_name" name="last_name" required>
-            </div>
-            <div class="form-group">
-                <label for="id_email">Email</label>
-                <input type="email" class="form-control" id="id_email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="id_date_of_birth">Date of Birth</label>
-                <input type="date" class="form-control" id="id_date_of_birth" name="date_of_birth" required>
-            </div>  
-            <div class="form-group">
-                <label for="id_address">Address</label>
-                <input type="text" class="form-control" id="id_address" name="address" required>
-            </div>
-        </div>
             <div class="col-12 col-sm-6">
-            <div class="form-group">
-                <label for="id_city">City</label>
-                <input type="text" class="form-control" id="id_city" name="city" required>
+                <div class="form-group">
+                    <label for="id_city">City</label>
+                    <input type="text" class="form-control" id="id_city" name="city" required>
+                </div>
+                <div class="form-group">
+                    <label for="id_state">State</label>
+                    <input type="text" class="form-control" id="id_state" name="state" required>
+                </div>
+                <div class="form-group">
+                    <label for="id_zip_code">Zip Code</label>
+                    <input type="text" class="form-control" id="id_zip_code" name="zip_code" required>
+                </div>
+                <div class="form-group">
+                    <label for="id_phone_number">Phone Number</label>
+                    <input type="text" class="form-control" id="id_phone_number" name="phone_number" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 mt-4">Register</button>
             </div>
-            <div class="form-group">
-                <label for="id_state">State</label>
-                <input type="text" class="form-control" id="id_state" name="state" required>
-            </div>
-            <div class="form-group">
-                <label for="id_zip_code">Zip Code</label>
-                <input type="text" class="form-control" id="id_zip_code" name="zip_code" required>
-            </div>
-            <div class="form-group">
-                <label for="id_phone_number">Phone Number</label>
-                <input type="text" class="form-control" id="id_phone_number" name="phone_number" required>
-            </div>
-            <button type="submit" class="btn btn-outline-primary w-100 mt-4">Register</button>
         </div>
-    </div>
     </form>
+    </div>
 </div>
 {% include 'site_visual.html'%}
 </main>

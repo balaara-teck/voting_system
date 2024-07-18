@@ -2,7 +2,7 @@
 
 
 <div class="nav-container">  
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
           
           <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'images/logo.png' %}" alt="" width="30" height="45">BilotBlitz</a>
@@ -15,7 +15,7 @@
                 <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'my_elections' %}">My Election</a>
+                <a class="nav-link text-light" href="{% url 'my_elections' %}">My Election</a>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -38,7 +38,7 @@
               </li>
             </ul>
             <form class="d-flex" role="search">
-              <input class="form-control me-2 search-box" type="search" placeholder="Not functioning" aria-label="Search">
+              <input class="form-control me-2 search-box" type="search" placeholder="search election" aria-label="Search">
               <button class="btn btn-outline-primary" type="submit">Search</button>
             </form>
             <a class="btn btn-dark signup mt-2 mt-lg-0" href="{% url 'register' %}" type="button">Sign Up</a>

@@ -5,28 +5,30 @@
 }
 
 body {
-    font-family: sans-serif;
-    background-color: rgb(240, 240, 240);
-    
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(85, 85, 101); 
 }
 
 
 nav {
-    box-shadow: 20px 20px 20px rgba(155, 106, 106, 0.1);
-    
-    
+    background-color:rgb(100, 100, 100) ;   
 }
 
+img {
+    filter: brightness(40%);
+}
+
+
 .search-box {
-    border: 1px solid rgb(155, 106, 106);
-    background-color: rgb(240, 240, 240);
+    border: 1px solid white;
+    background-color: rgb(100, 100, 100);
     border-radius: 20px;
     padding-left: 10px;
 }
 
 .new_election input {
     border: 1px solid rgb(155, 106, 106);
-    background-color: rgb(240, 240, 240);
+    background-color: rgb(255, 255, 255);
     height: 37px;
     border-radius: 4px;
     padding-left:10px;
@@ -43,15 +45,34 @@ nav {
 
 footer a {
     text-decoration: none;
-    color: black;
+    color: rgb(200, 200, 200);
     
 }
 
 
-footer a:hover {
+a:hover {
     text-decoration: underline;
-    color: blue;
     font-style: italic;
+}
+
+/* register_voter.html styling starts here */
+.voterform input {
+    background:linear-gradient(90deg,rgb(100, 100, 100),rgb(85, 85, 101));
+}
+
+
+/* end of register_voter.html styling */
+
+
+/* footer styling */
+
+footer h3 {
+    color: bisque;
+    font-style: italic;
+}
+
+.Copyright {
+    color: rgb(200, 200, 200);
 }
 
 .logo {
