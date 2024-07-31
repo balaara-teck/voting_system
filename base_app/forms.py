@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import VoterRegistrationModel,ElectorialCommissionOfficerModel,PortfolioModel,CandidateModel
+from .models import VoterRegistrationModel,ElectorialCommissionOfficerModel,PortfolioModel,CandidateModel,AccessElectionModel
 
 
 class UserRegistrationForm(UserCreationForm):
@@ -25,22 +25,28 @@ class ElectorialCommissionOfficerForm(forms.ModelForm):
     class Meta:
         model = ElectorialCommissionOfficerModel
         fields = ["election_name"]
-    election_name = forms.CharField(label='Election name', widget=forms.TextInput(attrs={'placeholder': ' Enter election Name'}))
+    election_name = forms.CharField(label='Election name', widget=forms.TextInput(attrs={'placeholder': ' e.g NJACollege SRC'}))
     
 class PortfolioForm(forms.ModelForm):
     class Meta:
         model = PortfolioModel
         fields = ["portfolio_name"]
-    portfolio_name = forms.CharField(label='portfolio name', widget=forms.TextInput(attrs={'placeholder': ' Enter portfolio Name'}))
+    portfolio_name = forms.CharField(label='Portfolio Name:', widget=forms.TextInput(attrs={'placeholder': 'Enter portfolio name. e.g President'}))
     
 class CandidateForm(forms.ModelForm):
     class Meta:
         model = CandidateModel
         fields = ["email","portfolio_name"]
     email = forms.CharField(label='Email', widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
-    
 
-    
+class AccessElectionForm(forms.ModelForm):
+    class Meta:
+        model = AccessElectionModel
+        fields = ["election_name","voter_id","email"]
+    election_name = forms.CharField(label='Election Name:', widget=forms.TextInput(attrs={'placeholder': 'Enter Election Name'}))
+    voter_id = forms.CharField(label='Voter ID:', widget=forms.TextInput(attrs={'placeholder': 'Enter Voting ID'}))
+    email = forms.CharField(label='Email:', widget=forms.EmailInput(attrs={'placeholder': 'Enter Your Email'}))
+   
 
 class VoterRegisterationForm(forms.ModelForm):
     class Meta:

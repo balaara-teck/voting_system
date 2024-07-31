@@ -12,5 +12,7 @@ urlpatterns = [
     path("my_elections/<str:pk>/voters",views.voters.as_view(),name="voters"),
     path('portfolios/<int:pk>', views.PortfolioView.as_view(), name='portfolios'),
     path('candidates/<int:pk>', views.CandidateView.as_view(), name='candidates'),
+    path('voter_identifier/', views.AccessElectionView.as_view(), name='voter_identifier'),
+    path('start_voting/', views.StartVotingView.as_view(), name='start_voting'),
 
 ]

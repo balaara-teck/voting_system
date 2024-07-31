@@ -1,0 +1,15 @@
+<form method="POST">
+    {% csrf_token %}
+    <h1>{{area_contested}}s</h1>
+    {%for contestant in contestants%}
+    
+    <div style="border: 1px solid black; padding: 10px;">
+
+        <p>{{contestant.candidate.first_name}}</p>
+        <p>{{contestant.candidate.last_name}}</p>
+        <p><input type="radio" name="email" value="{{contestant.candidate.email}}">Vote</p>
+    </div>
+    {%endfor%}
+    <p>Is your decision ok? Press the button below to submit your vote</p>
+    <button type="submit">Submit</button>
+</form>

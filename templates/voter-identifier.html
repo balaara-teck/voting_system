@@ -1,0 +1,19 @@
+<h1>Welcome to Bilotblitz voter identifier</h1>
+
+<div>
+<form method="POST" novalidate>
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="form-group">
+            {% if field.errors %}
+            {% for error in field.errors %}
+                <strong>{{ error }}</strong>
+            {% endfor %}
+            {% endif %}
+           <p>{{ field.label_tag }}</p> 
+            <p>{{ field }}</p>
+        </div>   
+    {% endfor %}
+    <button class="btn btn-primary btn-block mt-3 mb-2" type="submit">Access Election</button>
+</form>
+</div>

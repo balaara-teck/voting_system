@@ -1,14 +1,12 @@
-from django.forms import BaseModelForm
-from django.http import HttpRequest, HttpResponse
+
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth import authenticate, login,logout
-from .forms import UserLoginForm,UserRegistrationForm,VoterRegisterationForm,ElectorialCommissionOfficerForm,PortfolioForm,CandidateForm
+from .forms import UserLoginForm,UserRegistrationForm,VoterRegisterationForm,ElectorialCommissionOfficerForm,PortfolioForm,CandidateForm,AccessElectionForm
 from django.views.generic import CreateView
-from .models import VoterRegistrationModel,ElectorialCommissionOfficerModel,PortfolioModel,CandidateModel
+from .models import VoterRegistrationModel,ElectorialCommissionOfficerModel,PortfolioModel,CandidateModel,AccessElectionModel
 from django.urls import reverse_lazy,reverse
 from django.views.generic import View
 from django.contrib import messages
-from django.views.generic import ListView 
 from django.contrib.auth.mixins import LoginRequiredMixin
 import random
 import string
@@ -16,9 +14,84 @@ import string
 
 
 
+class AccessElectionView(View):
+    model = AccessElectionModel
+    form_class = AccessElectionForm
+    template_name = "voter-identifier.html"
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+    
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            election = form.cleaned_data['election_name'].lower()
+            voter_id = form.cleaned_data['voter_id']
+            email = form.cleaned_data['email']
+            if not ElectorialCommissionOfficerModel.objects.filter(election_name=election).exists() or  not VoterRegistrationModel.objects.filter(
+                election_name=get_object_or_404(ElectorialCommissionOfficerModel,election_name=election),
+                voter_id=voter_id,
+                email=email
+                ).exists():
+                form.add_error('election_name', 'Your credentials are invalid')
+                return render(request, self.template_name, {'form': form})
+            else:
+                self.request.session['election_name'] = election
+                self.request.session['voter_id'] = voter_id
+                self.request.session['email'] = email
+                return redirect('start_voting')
+        return render(request, self.template_name, {'form': form}) 
+
+
+class StartVotingView(View):
+    template_name = "start_voting.html"
+
+    def get(self, request, *args, **kwargs):
+        election = request.session.get('election_name')
+        voter_id = request.session.get('voter_id')
+        email = request.session.get('email')
+
+        voter = get_object_or_404(
+            VoterRegistrationModel,
+            election_name=get_object_or_404(ElectorialCommissionOfficerModel, election_name=election),
+            voter_id=voter_id,
+            email=email
+        )
+
+        areas_contested = PortfolioModel.objects.filter(
+            election_name=get_object_or_404(ElectorialCommissionOfficerModel, election_name=election)
+        )
+
+        current_index = request.session.get('current_portfolio_index', 0)
+
+        if current_index >= len(areas_contested):
+            return render(request, 'voting_complete.html')
+
+        current_portfolio = areas_contested[current_index]
+        contestants = CandidateModel.objects.filter(
+            election_name=get_object_or_404(ElectorialCommissionOfficerModel, election_name=election),
+            portfolio_name=current_portfolio
+        )
+
+        return render(request, self.template_name, {
+            'contestants': contestants,
+            'area_contested': current_portfolio
+        })
+
+    def post(self, request, *args, **kwargs):
+        contestant_email = request.POST.get('email')
+        contestant = get_object_or_404(CandidateModel, email=contestant_email)
+        contestant.votes += 1
+        contestant.save()
+        request.session['current_portfolio_index'] = request.session.get('current_portfolio_index', 0) + 1
+        return redirect('start_voting')
+
+           
 def home(request):
+   c_election = request.session.get('election_name')
    portfolios = PortfolioModel.objects.all()
-   return render(request, 'index.html',{'portfolios': portfolios})
+   return render(request, 'index.html',{'portfolios': portfolios,"c_election":c_election})
 
 def voter_card(request):
     try:
@@ -35,18 +108,22 @@ class CandidateView(CreateView):
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
-        pk = self.kwargs.get("pk")
+        pk = self.kwargs.get("pk")   
         election = get_object_or_404(ElectorialCommissionOfficerModel,user=self.request.user,id=pk)
+        voters = len(VoterRegistrationModel.objects.filter(election_name=election))
         form.fields["portfolio_name"].queryset = PortfolioModel.objects.filter(election_name=election)
         candidates= CandidateModel.objects.filter(election_name=election) 
-        return render(request, self.template_name, {"form": form, "candidates":candidates})
+        return render(request, self.template_name, {"form": form, "candidates":candidates,"election":election,"voters":voters})
         
     def form_valid(self, form):    
         pk = self.kwargs.get("pk")
         election = get_object_or_404(ElectorialCommissionOfficerModel,user=self.request.user,id=pk)
+        voters = len(VoterRegistrationModel.objects.filter(election_name=election))
         if not VoterRegistrationModel.objects.filter(election_name=election,email=form.instance.email).exists():
             form.add_error("email","Candidate must be a registered voter!")
-            return self.form_invalid(form)
+            candidates = CandidateModel.objects.filter(election_name=election)
+            return render(self.request, self.template_name, {"form": form, "candidates": candidates,"election":election,"voters":voters})
+
         form.instance.election_name = get_object_or_404(ElectorialCommissionOfficerModel,user=self.request.user, id=pk)
         form.instance.candidate = get_object_or_404(
             VoterRegistrationModel,
@@ -59,12 +136,15 @@ class CandidateView(CreateView):
             candidate=form.instance.candidate
             ).exists():
             form.add_error("email","This candidate has already been registered!")
-            return self.form_invalid(form)
-        
+            candidates = CandidateModel.objects.filter(election_name=election)
+            return render(self.request, self.template_name, {"form": form, "candidates": candidates,"election":election,"voters":voters})
+
         elif CandidateModel.objects.filter(email=form.instance.email).exists():
             form.add_error("email","One candidate cannot register for two portfolios!")
-            return self.form_invalid(form)
-        return super().form_valid(form)
+            candidates = CandidateModel.objects.filter(election_name=election)
+            return render(self.request, self.template_name, {"form": form, "candidates": candidates,"election":election,"voters":voters})
+
+        return super(CandidateView,self).form_valid(form)
     
     def get_success_url(self):
         pk = self.kwargs.get("pk")
@@ -81,6 +161,8 @@ class PortfolioView(CreateView):
         pk = self.kwargs.get("pk")
         election = get_object_or_404(ElectorialCommissionOfficerModel,user=self.request.user,id=pk) 
         context["portfolios"] = PortfolioModel.objects.filter(election_name=election)
+        context["election"] = election
+        context["voters"] = len(VoterRegistrationModel.objects.filter(election_name=election))
         return context
 
     def form_valid(self, form):
@@ -155,7 +237,6 @@ class ElectorialCommissionOfficerView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('voter_register', kwargs={'pk': self.object.pk})
 
-
 class voters(LoginRequiredMixin,View):
     login_url = reverse_lazy("login")
     template_name = "my_voters.html"
@@ -164,9 +245,7 @@ class voters(LoginRequiredMixin,View):
         pk = self.kwargs.get("pk")
         election = get_object_or_404(ElectorialCommissionOfficerModel,user=self.request.user,id=pk)
         voters = VoterRegistrationModel.objects.filter(election_name=election)
-        return render(request,self.template_name,{"voters":voters})
-
-    
+        return render(request,self.template_name,{"voters":voters,"election":election}) 
 
 def login_view(request):
     form = UserLoginForm()
@@ -178,7 +257,10 @@ def login_view(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect("my_elections")  # Redirect to a success page
+                return redirect("my_elections")
+            else:
+                messages.error(request, 'Invalid username or password')
+                return render(request, 'register_login.html', {'form': form})
     return render(request, 'register_login.html', {'form': form})
 
 def register(request):

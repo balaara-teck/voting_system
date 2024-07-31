@@ -2,16 +2,29 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     background-color: rgb(85, 85, 101); 
 }
 
 
 nav {
-    background-color:rgb(100, 100, 100) ;   
+    background-color:rgb(100, 100, 100) ;  
+     
+}
+
+header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 100;
+}
+
+main {
+    padding-top: 100px;
 }
 
 img {
@@ -39,15 +52,7 @@ img {
    margin-left:6px;
 }
 /* end of nav */
-.site-summary {
-    font-weight: 700;
-}
 
-footer a {
-    text-decoration: none;
-    color: rgb(200, 200, 200);
-    
-}
 
 
 a:hover {
@@ -63,8 +68,153 @@ a:hover {
 
 /* end of register_voter.html styling */
 
+/* register_login.html stylings */
+#form {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    margin: 30px auto;
+    color: aliceblue;
+   
+    padding: 5px 10px;
+    border-top-left-radius: 20px;
+    box-shadow: 15px 15px 15px rgba(99, 94, 94, 0.5);
+}
+
+@media screen( ) {
+    
+}
+
+.form-group input {
+    background:linear-gradient(90deg,rgb(100, 100, 100),rgb(85, 85, 101));
+    width: 100%;
+    padding-left: 15px;
+}
+
+.form-group p {
+    margin:3px 0;
+}
+
+.form-group input:hover {
+    background:linear-gradient(90deg,rgb(100, 100, 100),rgb(85, 85, 101));
+}
+/* end of register_login */
+/* my_voters.html styling */
+.no-voters {
+    max-width: 400px;
+    margin: 30px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.no-voters h1 {
+    color:bisque
+}
+/* end for my_voters.html */
+
+/* styling for portfolio.html */
+.portfolio {
+    display: flex;
+    flex-direction: column;
+}
+
+.portfolio p input {
+    width: 100%;
+    background-color: rgb(53, 36, 36);
+    margin: auto auto;
+    height: 35px;
+    border-radius:10px;
+    border: 1px solid white;
+    padding-left: 10px;
+}
+
+.portfolio .create-portfolio {
+    background-color: green;
+    color: white;
+    width: 70%;
+    margin: auto auto;
+    border-radius: 20px;
+    border: 1px solid;
+    padding-left: 30px;
+}
+.portfolio .create-portfolio:hover {
+    width: 80%;
+    height: 30px;
+}
+
+.portfolios li {
+    color: beige;
+}
+.portfolio-header,.candidate-div h3 {
+    color: rgb(224, 196, 255);
+}
+
+.portfolios {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 30px;
+}
+
+/* end of portfolio.html styling */
+
+/* styling of candidate.html */
+.candidate-form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+.candidate-form input, .candidate-form select {
+    width: 100%;
+    height: 40px;
+    padding-left: 20px;
+    background-color: rgb(76, 67, 67);
+}
+
+.candidate-div h3{
+
+}
+/* end fo candidate.html */
+/* beginning of index.html */
+
+#voter {
+    display: none;
+    max-width: 300px;
+    position: fixed;
+    top: auto;
+    bottom: auto;
+    left: 30%;
+    right: 30%;
+
+    
+}
+
+.vform {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(89, 78, 78);
+    color: beige;
+    z-index: 100;
+    border: 1px solid gainsboro;
+    padding:15px
+}
+
+.vform input {
+    width: 100%;
+}
 
 /* footer styling */
+
+.site-summary {
+    font-weight: 700;
+}
+
+footer a {
+    text-decoration: none;
+    color: rgb(200, 200, 200);
+    
+}
 
 footer h3 {
     color: bisque;

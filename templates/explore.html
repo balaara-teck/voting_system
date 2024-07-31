@@ -1,0 +1,54 @@
+<div class="container">
+    <div class="row">
+        <div class="col d-md-none">
+            <button class="btn btn-info" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">About This Election</button>
+
+            <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+                <div class="offcanvas-header">
+                    <h3 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Explore Election</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">    
+                    <p><a class="text-decoration-none text-info" href="{% url 'voters' election.id %}">
+                        <b>Number of Voters</a>: {{voters}}</b> 
+                    </p>
+                    <p>
+                        <a class="text-decoration-none text-info" href="{% url 'my_elections' %}"><b>Switch Election</b></a>
+                    </p>
+                    <p><a class="text-decoration-none text-info" href="{% url 'candidates' election.id %}">
+                        <b class="text-info">Register Candidates</b>
+                    </a>
+                        
+                    </p>
+                    <p>
+                        <b class="text-info">Start Voting</b>
+                    </p>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col d-none d-md-inline text-center text-white">
+            <strong>
+                <a href="{% url 'voters' election.id %}" class="text-info text-decoration-none">
+                Number of Voters</a>:        
+            </strong> {{voters}}
+        </div>
+         
+        <div class="col d-none d-md-inline text-center">
+            <a href="{% url 'my_elections' %}" class="text-decoration-none text-info"><strong>Switch Election</strong></a> 
+        </div>
+        <div class="col d-none d-md-inline text-center">
+            <a class="text-decoration-none text-info" href="{% url 'portfolios' election.id %}">  
+            <strong class="text-info">Create Portfolios</strong>
+            </a> 
+        </div> 
+        <div class="col d-none d-md-inline text-center">
+            <a class="text-decoration-none text-info" href="{% url 'candidates' election.id %}">
+                <strong class="text-info">Register Candidates</strong>
+            </a>
+        </div>
+        <div class="col d-none d-md-inline text-center">
+            <strong class="text-info">Start Voting</strong>
+        </div>
+    </div>            
+</div>

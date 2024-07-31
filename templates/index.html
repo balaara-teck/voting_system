@@ -11,21 +11,38 @@
 {%block content%}
 <main>
 <div class="container pt-lg-4 pb-lg-4 text-white">
-  <div class="row">      
+  <div class="row mb-5">      
       <div class="col-12 col-lg-6 ">
           <h1 class="text-center text-lg-start">Welcome To BilotBlitz!</h1>
           <p  class="text-center text-lg-start">We provide steps that make election <strong>simple, </strong><strong>fast,</strong>, <strong>secure,</strong><strong>accessible,</strong>
           and above all <strong>affordable.</strong></p>
-          <a class="btn btn-outline-light mt-2 d-none d-lg-inline" href="#" type="button">Read More</a>
+          <a class="btn btn-outline-light mt-2 d-none d-lg-inline" href="#" type="button">{{c_election}}</a>
       </div>
+      <!-- Javascript display it as small window -->
+      <div class="voter" id="voter">
+        <form id="voteForm" action="/vote-url/" method="post">
+          <label for="election_name">Election Name:</label>
+          <input type="text" id="election_name" name="election_name">
+      
+          <label for="voter_id">Voter ID:</label>
+          <input type="text" id="voter_id" name="voter_id">
+      
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email">
+      
+          <button type="submit">Vote</button>
+      </form>
+      
+      </div>
+      <!-- end of javascript of the window -->
       <div class="col-12 col-lg-6 text-center">
-      <h1 class="mt-5 mt-lg-0">Why Here?</h1>
-      <a class="btn btn-outline-light mt-2" href="#" type="button">As a Voter</a>
-      <a class="btn btn-info mt-2" href="{% url 'my_elections' %}" type="button">As an Officer</a>
+        <h1 class="mt-5 mt-lg-0">Why Here?</h1>
+        <a class="btn btn-outline-light mt-2" href="{% url 'voter_identifier'%}" type="button">As a Voter</a>
+        <a class="btn btn-info mt-2" href="{% url 'my_elections' %}" type="button">As an Officer</a>
       </div>     
   </div>
 </div>
-<div >
+<div class="mt-5">
   {%include 'site_visual.html'%}
 </div>
 </main>

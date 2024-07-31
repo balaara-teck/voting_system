@@ -1,16 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>voters</title>
-</head>
-<body>
+{%extends 'base_template.html'%}
+
+{%block header%}
+    <header>
+        {%include 'header.html'%}
+    </header>
+{%endblock header%}    
+{%block content%}
+    <main class="bg-dark">
+        <div class='container'>    
+            {%if voters%}
+            <div>
+                <h1 class="text-center text-white mb-5">Registered Voters</h1>
+                <table class="table table-dark table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col" class="d-none d-lg-block">Serial No:</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col" class="d-none d-md-block">Last Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col" class="d-none d-sm-block">Voter ID</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {%for voter in voters reversed%}
+                      <tr>
+                        <td class="d-none d-lg-block">{{voter.id}}</td>
+                        <td>{{voter.first_name}}</td>
+                        <td class="d-none d-md-block">{{voter.last_name}}</td>
+                        <td>{{voter.email}}</td>
+                        <td class="d-none d-sm-block">{{voter.voter_id}}</td>        
+                      </tr>
+                      {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+            {%else%}
+            <div class="no-voters">
+                <h1 class="mt-0 mt-md-5">Registered Voters</h1>
+                <p class="text-light">You have no registered voters for this election</p>
+                <p class="text-light">If you have some, they would have displayed <em>here!</em></p>
+                <p class="text-light">You can register them <a href="{% url 'voter_register' election.id %}">here</a></p>
+            </div>
+            {%endif%}
+        </div>
+        <div class="mt-5">
+            {%include 'site_visual.html'%}
+        </div>
+        
+    </main>
+{%endblock content%}    
+{%block footer%}
+<footer>
+    {%include 'footer.html'%}
+</footer>
+
+{%endblock footer%}
     
-    <ol>
-        {%for voter in voters%}
-        <li>{{voter.first_name}} {{voter.last_name}} {{voter.voter_id}}</li>
-        {%endfor%}
-    </ol>
-</body>
-</html>
+    

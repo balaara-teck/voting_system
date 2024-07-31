@@ -1,31 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Candidates</title>
-</head>
-<body>
-    <form method="POST" novalidate>
-        {% csrf_token %}
-        {% for field in form %}
-        <div>
-            {% if field.errors %}
-                {% for error in field.errors %}
-                <small>
-                    {{error}}
-                </small>
-                {% endfor%}
-            {% endif %}
-            {{field}}      
+{%extends 'base_template.html'%}
+
+{%block title%}Candidates | BilotBlitz{%endblock title%}
+
+{%block header%}
+    <header>
+        {%include 'header.html'%}
+    </header>   
+{%endblock header%}
+
+{%block content%}
+<main>   
+    <div class="mb-5">
+        {%include 'explore.html'%}
+    </div>
+    <div class="container candidate-div">
+        <div class="row">
+          <div class="col-md-6 candidate-div">
+            <h3 class="text-center">Candidates Registration Form</h3>
+            <form method="POST" class="candidate-form">
+              {% csrf_token %}
+              {% for field in form %}
+              <div class="form-group">
+                {% if field.errors %}
+                  {% for error in field.errors %}
+                  <div class="alert alert-danger text-center" role="alert">
+                     {{error}}
+                  </div>
+                  {% endfor %}
+                {% endif %}
+                <p class="text-white">{{ field.label_tag }}</p>
+                {{ field }}
+              </div>
+              {% endfor %}
+              <p style="margin:0 auto;" class="text-white ">Create more portfolios <a class="text-info mt-0" href="{% url 'portfolios' election.id %}">here</a></p>
+              <input type="submit" value="Register Candidate" class="btn btn-primary mb-5">
+            </form>
+          </div>
+          <div class="col-md-6">
+            <h3 class="text-center">Registered Candidates</h3>
+            {% if candidates%}
+            <ol class="mt-4">
+              {% for candidate in candidates reversed %}
+              <li class="candidates text-info mt-2">
+                {{ candidate.candidate.first_name }} {{ candidate.candidate.last_name }}-{{ candidate.portfolio_name.portfolio_name }}
+              </li>
+              {% endfor %}
+            </ol>
+            {%else%}
+             <div>
+                <p class="text-center text-white">You have no candidate for this election</p>
+                <p class="text-center text-white">You can register them <a href="{% url 'candidates' election.id%}">here</a></p>
+             </div>
+            {%endif%}
+          </div>
         </div>
-        {%endfor%}
-        <input type="submit" value="Create" >
-    </form>
-    <ol>
-        {%for candidate in candidates%}
-        <li>{{candidate.candidate.first_name}} {{candidate.candidate.last_name}} {{candidate.portfolio_name.portfolio_name}}</li>
-        {%endfor%}
-    </ol>
-</body>
-</html>
+      </div>
+      {%include 'site_visual.html'%}
+</main>
+{%endblock content%}
+
+{%block footer%}
+<footer>
+    {%include 'footer.html'%}
+</footer>
+{%endblock footer%}
+

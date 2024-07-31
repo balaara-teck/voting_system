@@ -37,8 +37,14 @@ class CandidateModel(models.Model):
     election_name = models.ForeignKey(ElectorialCommissionOfficerModel, on_delete=models.CASCADE)
     portfolio_name = models.ForeignKey(PortfolioModel, on_delete=models.CASCADE)
     email = models.EmailField()# for filtering candidate in VoterRegistrationModel
+    votes = models.PositiveIntegerField(default=0)
+    date_registered = models.DateField(auto_now_add=True)
     def __str__(self):
         return f"{self.candidate}" 
+    
+class VotesnumberModel(models.Model):
+    candidate = models.ForeignKey(CandidateModel,on_delete=models.CASCADE)
+    candidate_vote = models.PositiveIntegerField(default=0)
     
 class VoterModel(models.Model):
     voter = models.ForeignKey(VoterRegistrationModel, on_delete=models.CASCADE)
@@ -54,12 +60,15 @@ class StartEctionModel(models.Model):
     end_time = models.DateField()
     def __str__(self):
         return f"{self.election_name}"
-    
+
+
 class AccessElectionModel(models.Model):
-    election_name = models.ForeignKey(ElectorialCommissionOfficerModel, on_delete=models.CASCADE)
-    access_time = models.DateField(auto_now_add=True)
+    election_name = models.CharField(max_length=200)
+    voter_id = models.CharField(max_length=200)
+    email = models.EmailField()
     def __str__(self):
         return f"{self.election_name}"
+
 
  
 
