@@ -1,55 +1,61 @@
 {%extends 'index.html'%}
+{% load static %}
 
   {%block title%}My Elections | BilotBlitz{%endblock title%}
 
   {%block content%}
-  <main>
+  <main class="my_elections">
     <div class="container text-light">
       <div class="row pt-lg-4 pb-lg-4">
         <div class="col-12">
-          <h1 class="text-center display-1">My Elections</h1>
+          <h1 class="text-center display-1 text-info">My Elections</h1>
         </div>
       </div>
       <div class="row">
-        <div class="col-12 col-md-6 ">
+        <div class="col-12 col-lg-6 order-2 order-lg-1">
         {% if existing_elections %}
-          <div>
-            <h2 class="text-center text-sm-start mb-3">Existing Elections;</h2>
-            
-              <ol  class="m-2 text-sm-start align-items-left">
+          <div class="text-center existing_elections-container">
+            <h2 class="mb-3">My Existing Elections</h2>
+              <ol class="text-start">
                 {% for election in existing_elections %}
-                <li>
-                  <a class="text-decoration-none text-light existing_elections" href="{% url 'voter_register' election.id %}">
+                <li class="pb-3">
+                  <a class="text-decoration-none text-light" href="{% url 'voter_register' election.id %}">
                     {{ election.election_name}}
                   </a>
+                  [<a href="#" class="edit">Edit</a>
+                  <a href="#" class="delete">Delete</a>
+                  <a href="#" class="status">Status</a>]
                 </li>
                 {% endfor %}
               </ol>        
           </div>
-        {% else %}
-            <h2 class="text-center text-sm-start mb-5">No Existing Election</h2>
+        {% else %}          
+            <img src="{% static 'images\image2.jpg' %}" class="w-100" alt=""> 
+
         {% endif %}
         </div>
-        <div class="col-12 col-md-6 new_election mb-5">
-          <h2 class="text-center text-sm-start mb-3">Create New Election Instead?</h2>
-          <form method="post" class="text-center text-sm-start " nonvalidate>
+        <div class="col-12 col-lg-6 mb-5 order-1 order-lg-2 new-election-form">
+          <form method="post" class="d-flex flex-column" nonvalidate>
             {% csrf_token %}
+            <p class="mb-2 mt-4 text-info">New Election:</p>
             {% for field in form %}
-            {%if field.errors%}
-            {%for error in field.errors%}
-            <em class="text-info mb-5">{{ error }}</em>
-            {%endfor%}
-            {%endif%}
-            <p class="mb-1 mt-3">Enter the name of the new election:</p>
+              {%if field.errors%}
+                {%for error in field.errors%}
+                  <em class="text-light mb-2">{{ error }}</em>
+                {%endfor%}
+              {%endif%}      
             {{ field }}
             {% endfor %}
-            <button type="submit" class="btn btn-outline-primary mt-3">Create</button>
+            <p class="text-info mb-0 mt-3"><strong class="text-light">Note!</strong> After an election is created, means whatever you do is identified by that election</p>
+            <button type="submit" class="btn btn-outline-light mt-3">Create</button>
           </form>
         </div>
       </div>
     </div>
     <div class="mt-5">
+      {% if existing_elections%}
       {%include 'site_visual.html'%}
+      {%endif%}
     </div>
 </main>
   {%endblock content%}

@@ -1,5 +1,5 @@
 {% extends "base_template.html" %}
-
+{% load static %}
 {% block title %}
 {%if template == "register.html"%}
 Register | BillotBlitz
@@ -16,39 +16,52 @@ Login | BillotBlitz
 
 
 {% block content %}
-<main>
-    <div class="cont">
-    <form method="POST" id="form" novalidate class="form-container mt-5">  
-        <h1 class="text-center"> {% if template == "register.html" %} Register {%else%} Login {%endif%}</h1> 
-        <hr> 
-        <small class="text-center text-info">
-             {%if messages%}
-             {%for mes in messages%}
-             {{mes}}
-             {%endfor%}
-             {%endif%}
-        </small>  
-        {% csrf_token %}
-        {% for field in form %}
-            <div class="form-group">
-                {% for error in field.errors %}
-                    <strong>{{ error }}</strong>
-                {% endfor %}
-               <p>{{ field.label_tag }}</p> 
-                <p>{{ field }}</p>
-            </div>   
-        {% endfor %}
-        <button class="btn btn-primary btn-block mt-3 mb-2" type="submit">
-            {% if template == "register.html" %}Register{%else%}Login{%endif%}
-        </button>
-        <p class="">
-            {% if template == "register.html" %}Already registered?
-            <a href="{% url 'login' %}" class="text-info">Login here</a>
-            {%else%}Not registered Yet?
-            <a href="{% url 'register' %}" class="text-info">Register here</a>
-            {%endif%}
-        </p>
-    </form>
+<main class="login_register">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 order-lg-1 order-2">
+                <div class="text-center text-info">
+                    <h1 class="text-info d-none d-lg-inline">Voting is fun with </h1>
+                    <strong class="display-1 d-none d-lg-inline">BilotBlitz</strong>
+                    <h2 class="text-center text-info d-lg-none pt-5">Voting is fun with<strong> BilotBlitz</strong></h2>
+                    <img src="{% static 'images\image2.jpg' %}" class="w-100" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6 order-lg-2 order-1">
+                <form method="POST" id="form" novalidate class="form-container mt-5">  
+                    <h1 class="text-center"> {% if template == "register.html" %} Register {%else%} Login {%endif%}</h1> 
+                    <hr> 
+                    <small class="text-center text-info">
+                         {%if messages%}
+                         {%for mes in messages%}
+                         {{mes}}
+                         {%endfor%}
+                         {%endif%}
+                    </small>  
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="register-login-form">
+                            {% for error in field.errors %}
+                                <small class="text-info">{{ error }}</small>
+                            {% endfor %}
+                           <p >{{ field.label_tag }}</p> 
+                            <p>{{ field }}</p>
+                        </div>   
+                    {% endfor %}
+                    <button class="btn btn-outline-info btn-block mt-3 mb-2" type="submit">
+                        {% if template == "register.html" %}Register{%else%}Login{%endif%}
+                    </button>
+                    <p class="text-center">
+                        {% if template == "register.html" %}Already registered?
+                        <a href="{% url 'login' %}" class="text-primary">Login here</a>
+                        {%else%}Not registered Yet?
+                        <a href="{% url 'register' %}" class="text-primary">Register here</a>
+                        {%endif%}
+                    </p>
+                </form>
+            </div>
+            
+        </div>
     </div>  
 </main>
 {% endblock %}

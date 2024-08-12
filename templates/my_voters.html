@@ -6,38 +6,56 @@
     </header>
 {%endblock header%}    
 {%block content%}
-    <main class="bg-dark">
+    <main>
+        <div class="mb-3">
+            {%include "explore.html"%}
+        </div>
+        <h1 class="text-center display-1">Voters' Register</h1>
+          
         <div class='container'>    
             {%if voters%}
-            <div>
-                <h1 class="text-center text-white mb-5">Registered Voters</h1>
-                <table class="table table-dark table-hover">
-                    <thead>
-                      <tr>
-                        <th scope="col" class="d-none d-lg-block">Serial No:</th>
-                        <th scope="col">First Name</th>
-                        <th scope="col" class="d-none d-md-block">Last Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col" class="d-none d-sm-block">Voter ID</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        {%for voter in voters reversed%}
-                      <tr>
-                        <td class="d-none d-lg-block">{{voter.id}}</td>
-                        <td>{{voter.first_name}}</td>
-                        <td class="d-none d-md-block">{{voter.last_name}}</td>
-                        <td>{{voter.email}}</td>
-                        <td class="d-none d-sm-block">{{voter.voter_id}}</td>        
-                      </tr>
-                      {%endfor%}
-                    </tbody>
-                </table>
+            <div class="row voter text-light">
+                <h3 class="col d-none d-lg-inline ">
+                    Serial No
+                </h3>
+                <h3 class="col d-none d-sm-inline">
+                    First Name 
+                </h3>
+                <h3 class="col d-none d-md-inline">
+                    Last Name
+                </h3>
+                <h3 class="col text-start">
+                    Email
+                </h3>
+                <h3 class="col text-end">
+                    Voter ID 
+                </h3>
             </div>
+            {% for voter in voters %}
+            <a class="each-voter" href="#">
+            <div class="row voter">
+                <div class="col d-none d-lg-inline">
+                    {{voter.id}}
+                </div>
+                <div class="col d-none d-sm-inline">
+                    {{ voter.first_name}} 
+                </div>
+                <div class="col d-none d-md-inline">
+                    {{voter.last_name}}
+                </div>
+                <div class="col">
+                    {{voter.email}}
+                </div>
+                <div class="col text-info text-end">
+                    {{voter.voter_id}} 
+                </div>
+            </div>
+            </a>
+            {%endfor%}
             {%else%}
             <div class="no-voters">
-                <h1 class="mt-0 mt-md-5">Registered Voters</h1>
-                <p class="text-light">You have no registered voters for this election</p>
+                <h1 class="mt-0 mt-md-5">Oops!</h1>
+                <p class="text-light">It seems you do not have voters for this election</p>
                 <p class="text-light">If you have some, they would have displayed <em>here!</em></p>
                 <p class="text-light">You can register them <a href="{% url 'voter_register' election.id %}">here</a></p>
             </div>

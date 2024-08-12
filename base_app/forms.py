@@ -25,7 +25,7 @@ class ElectorialCommissionOfficerForm(forms.ModelForm):
     class Meta:
         model = ElectorialCommissionOfficerModel
         fields = ["election_name"]
-    election_name = forms.CharField(label='Election name', widget=forms.TextInput(attrs={'placeholder': ' e.g NJACollege SRC'}))
+    election_name = forms.CharField( widget=forms.TextInput(attrs={'placeholder': " Enter Election's Name" }))
     
 class PortfolioForm(forms.ModelForm):
     class Meta:

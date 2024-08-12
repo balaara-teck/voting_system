@@ -1,3 +1,5 @@
+/* general styling */
+
 * {
     margin: 0;
     padding: 0;
@@ -7,13 +9,46 @@
 
 body {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    background-color: rgb(85, 85, 101); 
+    background: linear-gradient(90deg,black,2%,rgb(100, 100, 100),black); 
 }
 
+main {
+    padding-top: 100px;
+}
 
+a:hover {
+    font-style: italic;
+}
+
+img {
+    filter: brightness(39%);
+}
+
+/* end of general styling */
+
+/* styling  */
+
+.site_visual {
+    width: 100%;
+    height: 600px;
+}
+
+/* navbar styling */
 nav {
-    background-color:rgb(100, 100, 100) ;  
+    background: linear-gradient(90deg,rgb(100, 100, 100),black,rgb(100, 100, 100));  
      
+}
+
+.navbar-brand-text {
+    font-weight: bold;
+}
+
+.navbar-brand-text:hover {
+    font-style: normal;
+}
+
+.navbar-brand-text img {
+    border-radius: 0;
 }
 
 header {
@@ -23,21 +58,20 @@ header {
     z-index: 100;
 }
 
-main {
-    padding-top: 100px;
-}
 
-img {
-    filter: brightness(40%);
+
+.signup {
+   margin-left:10px;
 }
 
 
-.search-box {
-    border: 1px solid white;
-    background-color: rgb(100, 100, 100);
-    border-radius: 20px;
-    padding-left: 10px;
-}
+/* end of navbar styling */
+
+
+
+
+
+
 
 .new_election input {
     border: 1px solid rgb(155, 106, 106);
@@ -48,69 +82,118 @@ img {
     margin-top: 3px;
 }
 
-.signup {
-   margin-left:6px;
-}
-/* end of nav */
-
-
-
-a:hover {
-    text-decoration: underline;
-    font-style: italic;
-}
 
 /* register_voter.html styling starts here */
 .voterform input {
-    background:linear-gradient(90deg,rgb(100, 100, 100),rgb(85, 85, 101));
+    
 }
 
 
 /* end of register_voter.html styling */
 
 /* register_login.html stylings */
+.login_register {
+    background: rgb(100, 100, 100)
+}
+
 #form {
     display: flex;
     flex-direction: column;
     max-width: 300px;
-    margin: 30px auto;
+    margin:0 auto;
     color: aliceblue;
-   
-    padding: 5px 10px;
-    border-top-left-radius: 20px;
-    box-shadow: 15px 15px 15px rgba(99, 94, 94, 0.5);
-}
-
-@media screen( ) {
+    padding: 5px 10px;  
     
 }
 
-.form-group input {
-    background:linear-gradient(90deg,rgb(100, 100, 100),rgb(85, 85, 101));
+
+
+.register-login-form input {
+    background: rgb(100, 100, 100);
     width: 100%;
     padding-left: 15px;
+    border: 1px solid gray;
+    height: 30px;
+    border-top-left-radius: 15px;
 }
 
-.form-group p {
+.register-login-form input:hover {
+    background:linear-gradient(90deg,rgb(100, 100, 100),rgb(85, 85, 101));
+}
+
+.register-login-form p {
     margin:3px 0;
 }
 
-.form-group input:hover {
-    background:linear-gradient(90deg,rgb(100, 100, 100),rgb(85, 85, 101));
-}
+
 /* end of register_login */
-/* my_voters.html styling */
-.no-voters {
-    max-width: 400px;
-    margin: 30px auto;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
+
+/* my_elections.html styling */
+
+.my_elections {
+    background:rgb(100, 100, 100)
+
 }
 
-.no-voters h1 {
-    color:bisque
+@media (min-width: 1000px) {
+    
+   .my_elections {
+    background:linear-gradient(90deg,gray, rgb(100, 100, 100),rgb(100, 100, 100),gray)
+
+} 
+  }
+
+.edit,.delete,.status {
+    text-decoration: none;
+    color: aquamarine;
 }
+
+.existing_elections-container {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+
+.new-election-form {
+    max-width: 500px;
+    margin:0 auto;
+}
+
+.new-election-form input {
+    background:linear-gradient(90deg, rgb(100, 100, 100),black,rgb(100, 100, 100))
+}
+/* end of my_elections */
+
+/* styling of register_voter.html */
+
+.voterform .left input {
+    background:linear-gradient(90deg, rgb(100, 100, 100),gray) 
+}
+
+.voterform .right input {
+    background:linear-gradient(90deg,gray, rgb(100, 100, 100)) 
+}
+
+/* end for register_voter.html  */
+/* my_voters.html styling */
+.voter:hover {
+    color:white;
+    border:1px gray solid;
+   
+    background:linear-gradient(90deg, rgb(100, 100, 100),black,rgb(100, 100, 100))
+}
+
+.each-voter {
+    text-decoration:none;
+    color:black;
+}
+
+.each-voter:hover {
+    font-style:normal;
+}
+
+
+  
 /* end for my_voters.html */
 
 /* styling for portfolio.html */
@@ -207,22 +290,25 @@ a:hover {
 /* footer styling */
 
 .site-summary {
-    font-weight: 700;
+    
 }
 
 footer a {
     text-decoration: none;
-    color: rgb(200, 200, 200);
+    color: rgb(13, 202, 240);
+    
     
 }
 
 footer h3 {
-    color: bisque;
+    font-weight: 700;
+    color: black;
     font-style: italic;
 }
 
 .Copyright {
     color: rgb(200, 200, 200);
+    background: linear-gradient(90deg,rgb(100, 100, 100),black,rgb(100, 100, 100));
 }
 
 .logo {
@@ -230,12 +316,11 @@ footer h3 {
 }
 
 footer img {
-    width: 25px;
+    width: 20px;
+    filter: brightness(39%);
+    border-radius: 50%;
 }
 /* end of footer */
 
 /* election styles */
-.existing_elections {
-    
- 
-}
+

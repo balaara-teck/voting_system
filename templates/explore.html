@@ -8,10 +8,16 @@
                     <h3 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Explore Election</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
-                <div class="offcanvas-body">    
-                    <p><a class="text-decoration-none text-info" href="{% url 'voters' election.id %}">
-                        <b>Number of Voters</a>: {{voters}}</b> 
+                <div class="offcanvas-body">
+                    {%if template == "my_voters.html" %}    
+                    <p>
+                        <b><a class="text-decoration-none text-info" href="{% url 'voters' election.id %}">Register Voter</a></b> 
                     </p>
+                    {%else%}
+                    <p>
+                        <b><a class="text-decoration-none text-info" href="{% url 'voters' election.id %}">Number of Voters</a>: {{no_of_voters}}</b> 
+                    </p>
+                    {%endif%}
                     <p>
                         <a class="text-decoration-none text-info" href="{% url 'my_elections' %}"><b>Switch Election</b></a>
                     </p>
@@ -28,10 +34,17 @@
             </div>
         </div>
         <div class="col d-none d-md-inline text-center text-white">
+            {%if template == "my_voters.html"%}
+            <strong>
+                <a href="{% url 'voter_register' election.id %}" class="text-info text-decoration-none">
+                Register Voter</a>        
+            </strong> 
+            {%else%}
             <strong>
                 <a href="{% url 'voters' election.id %}" class="text-info text-decoration-none">
                 Number of Voters</a>:        
-            </strong> {{voters}}
+            </strong> {{no_of_voters}}
+            {%endif%}
         </div>
          
         <div class="col d-none d-md-inline text-center">

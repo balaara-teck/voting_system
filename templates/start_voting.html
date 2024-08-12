@@ -1,14 +1,27 @@
 <form method="POST">
     {% csrf_token %}
-    <h1>{{area_contested}}s</h1>
-    {%for contestant in contestants%}
     
+    <h1>Candidates contesting for {{area_contested}}</h1>
+    {%for contestant in contestants%}
+    {%if no_of_contestants == 1 %}
     <div style="border: 1px solid black; padding: 10px;">
+        <p>{{contestant.candidate.first_name}}</p>
+        <p>{{contestant.candidate.last_name}}</p>
+        <strong>Only one candidate contested for {{area_contested}}, Click YES to vote for or NO if against.</strong>
+        <p><input type="radio" name="email" value="{{contestant.candidate.email}} yes">Yes</p>
+        <p><input type="radio" name="email" value="{{contestant.candidate.email}} no">No</p>
 
+    </div>
+    {%else%}
+    <div style="border: 1px solid black; padding: 10px;">
         <p>{{contestant.candidate.first_name}}</p>
         <p>{{contestant.candidate.last_name}}</p>
         <p><input type="radio" name="email" value="{{contestant.candidate.email}}">Vote</p>
+        
     </div>
+    {%endif%}
+    
+    
     {%endfor%}
     <p>Is your decision ok? Press the button below to submit your vote</p>
     <button type="submit">Submit</button>

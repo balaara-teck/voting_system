@@ -28,6 +28,7 @@ class VoterRegistrationModel(models.Model):
     voter_id = models.CharField(max_length=10,unique=True)
     # photo = models.ImageField()
     # bymetrics = models.BinaryField()
+    is_voted = models.BooleanField(default=False)
     date_registed = models.DateField(auto_now_add=True)
     def __str__(self):
         return self.first_name + " " + self.last_name
@@ -47,9 +48,9 @@ class VotesnumberModel(models.Model):
     candidate_vote = models.PositiveIntegerField(default=0)
     
 class VoterModel(models.Model):
+    election_name = models.ForeignKey(ElectorialCommissionOfficerModel, on_delete=models.CASCADE)
+    current_portfolio_index = models.PositiveBigIntegerField(default=0)
     voter = models.ForeignKey(VoterRegistrationModel, on_delete=models.CASCADE)
-    candidate = models.ForeignKey(CandidateModel, on_delete=models.CASCADE)
-    portfolio_name = models.ForeignKey(PortfolioModel, on_delete=models.CASCADE)
     time_voted = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return f"{self.voter}"

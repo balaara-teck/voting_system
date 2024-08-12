@@ -11,7 +11,7 @@
 <main>
     {%include 'explore.html'%}
     <div class="container mt-5">
-        <h1 class="mb-4 text-center text-white">{{election.election_name |title}} Election Voter Registration</h1>
+        <h2 class="mb-4 text-center text-white">{{election_name}} ELECTION VOTER REGISTRATION FORM</h2>
         {% for field in form %}
         <div class="form-group">
             {% for error in field.errors %}
@@ -31,7 +31,7 @@
     <form method="post">
         {% csrf_token %}
         <div class="row text-white voterform">
-           <div class="col-12 col-sm-6">
+           <div class="col-12 col-sm-6 left">
                 <div class="form-group">
                     <label for="id_first_name">First Name</label>
                     <input type="text" class="form-control" id="id_first_name" name="first_name" required>
@@ -53,7 +53,7 @@
                     <input type="text" class="form-control" id="id_address" name="address" required>
                 </div>
             </div>
-            <div class="col-12 col-sm-6">
+            <div class="col-12 col-sm-6 right">
                 <div class="form-group">
                     <label for="id_city">City</label>
                     <input type="text" class="form-control" id="id_city" name="city" required>
@@ -70,7 +70,7 @@
                     <label for="id_phone_number">Phone Number</label>
                     <input type="text" class="form-control" id="id_phone_number" name="phone_number" required>
                 </div>
-                <button type="submit" class="btn btn-primary w-100 mt-4">Register</button>
+                <button type="submit" class="btn btn-outline-info w-100 mt-4">Register</button>
             </div>
         </div>
     </form>
