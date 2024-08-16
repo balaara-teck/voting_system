@@ -44,7 +44,6 @@ class AccessElectionView(View):
                 return redirect('start_voting')
         return render(request, self.template_name, {'form': form}) 
 
-
 class StartVotingView(View):
     template_name = "start_voting.html"
 
@@ -105,8 +104,7 @@ class StartVotingView(View):
                 
         request.session[voter_id] = request.session.get(voter_id, 0) + 1   
         return redirect('start_voting')
-
-           
+          
 def home(request):
    c_election = request.session.get('election_name')
    portfolios = PortfolioModel.objects.all()
@@ -129,19 +127,19 @@ class CandidateView(CreateView):
         form = self.form_class()
         pk = self.kwargs.get("pk")   
         election = get_object_or_404(ElectorialCommissionOfficerModel,user=self.request.user,id=pk)
-        voters = len(VoterRegistrationModel.objects.filter(election_name=election))
+        no_of_voters = len(VoterRegistrationModel.objects.filter(election_name=election))
         form.fields["portfolio_name"].queryset = PortfolioModel.objects.filter(election_name=election)
         candidates= CandidateModel.objects.filter(election_name=election) 
-        return render(request, self.template_name, {"form": form, "candidates":candidates,"election":election,"voters":voters})
+        return render(request, self.template_name, {"form": form, "candidates":candidates,"election":election,"no_of_voters":no_of_voters,"template_name":self.template_name})
         
     def form_valid(self, form):    
         pk = self.kwargs.get("pk")
         election = get_object_or_404(ElectorialCommissionOfficerModel,user=self.request.user,id=pk)
-        voters = len(VoterRegistrationModel.objects.filter(election_name=election))
+        no_of_voters = len(VoterRegistrationModel.objects.filter(election_name=election))
         if not VoterRegistrationModel.objects.filter(election_name=election,email=form.instance.email).exists():
             form.add_error("email","Candidate must be a registered voter!")
             candidates = CandidateModel.objects.filter(election_name=election)
-            return render(self.request, self.template_name, {"form": form, "candidates": candidates,"election":election,"voters":voters})
+            return render(self.request, self.template_name, {"form": form, "candidates": candidates,"election":election,"no_of_voters":no_of_voters,"template_name":self.template_name})
 
         form.instance.election_name = get_object_or_404(ElectorialCommissionOfficerModel,user=self.request.user, id=pk)
         form.instance.candidate = get_object_or_404(
@@ -156,13 +154,12 @@ class CandidateView(CreateView):
             ).exists():
             form.add_error("email","This candidate has already been registered!")
             candidates = CandidateModel.objects.filter(election_name=election)
-            return render(self.request, self.template_name, {"form": form, "candidates": candidates,"election":election,"voters":voters})
+            return render(self.request, self.template_name, {"form": form, "candidates": candidates,"election":election,"no_of_voters":no_of_voters,"template_name":self.template_name})
 
         elif CandidateModel.objects.filter(email=form.instance.email).exists():
             form.add_error("email","One candidate cannot register for two portfolios!")
             candidates = CandidateModel.objects.filter(election_name=election)
-            return render(self.request, self.template_name, {"form": form, "candidates": candidates,"election":election,"voters":voters})
-
+            return render(self.request, self.template_name, {"form": form, "candidates": candidates,"election":election,"no_of_voters":no_of_voters,"template_name":self.template_name})
         return super(CandidateView,self).form_valid(form)
     
     def get_success_url(self):
@@ -181,7 +178,8 @@ class PortfolioView(CreateView):
         election = get_object_or_404(ElectorialCommissionOfficerModel,user=self.request.user,id=pk) 
         context["portfolios"] = PortfolioModel.objects.filter(election_name=election)
         context["election"] = election
-        context["voters"] = len(VoterRegistrationModel.objects.filter(election_name=election))
+        context["no_of_voters"] = len(VoterRegistrationModel.objects.filter(election_name=election))
+        context["template_name"] = "portfolio.html"
         return context
 
     def form_valid(self, form):
@@ -192,12 +190,12 @@ class PortfolioView(CreateView):
         if PortfolioModel.objects.filter(election_name=election,portfolio_name=form.instance.portfolio_name).exists():
             form.add_error("portfolio_name","This portfolio already exist")
             return self.form_invalid(form)
+        
         return super().form_valid(form)
     
     def get_success_url(self) -> str:
         pk = self.kwargs.get("pk")
         return reverse("portfolios",kwargs={"pk":pk})
-
 
 class VoterRegisterView(LoginRequiredMixin, View):
     form_class = VoterRegisterationForm
@@ -248,8 +246,14 @@ class ElectorialCommissionOfficerView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         form.instance.election_name = form.instance.election_name.upper()
-        if ElectorialCommissionOfficerModel.objects.filter(election_name=form.instance.election_name).exists():
-            form.add_error('election_name', f'{self.request.user.username.capitalize()}, an election account with the name "{form.instance.election_name}" exists')
+        if len(form.instance.election_name) < 3:
+            form.add_error('election_name', f"{self.request.user.username.capitalize()}, at least three characters are required for election's name")
+            return self.form_invalid(form)
+        elif ElectorialCommissionOfficerModel.objects.filter(election_name=form.instance.election_name).exists():
+            form.add_error('election_name', f'{self.request.user.username.capitalize()}, an election account with the name "{form.instance.election_name}" already exists')
+            return self.form_invalid(form)
+        elif len(ElectorialCommissionOfficerModel.objects.filter(user=self.request.user)) >= 5:
+            form.add_error('election_name', f"{self.request.user.username.capitalize()}, you can't have more than five election. Cosinder deleting one.")
             return self.form_invalid(form)
         return super().form_valid(form)
        

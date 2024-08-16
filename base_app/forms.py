@@ -37,8 +37,8 @@ class CandidateForm(forms.ModelForm):
     class Meta:
         model = CandidateModel
         fields = ["email","portfolio_name"]
-    email = forms.CharField(label='Email', widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
-
+    email = forms.CharField(label='Candidate`s Email', widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
+    
 class AccessElectionForm(forms.ModelForm):
     class Meta:
         model = AccessElectionModel

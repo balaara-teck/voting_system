@@ -12,46 +12,54 @@
 <main>
     {% include 'explore.html'%}
 <div class="container pt-5 pb-5">
-    <div class="row pt-5 pb-5">
-        <div class="col-12 col-md-6">
-            
-            <form method="POST" class="portfolio">
-                {% csrf_token %}
-                {% for field in form %}
-                <div>
-                    <h3 class="text-center pb-3 portfolio-header">Create Your Portfolios Here</h3>
-                    {% for field in messages %}
-                    <div class="alert alert-success text-center" role="alert">
-                        {{field}}
-                    </div>    
-                    {% endfor %}
-                        {% if field.errors %}
-                            {% for error in field.errors %}
-                            <small class="text-info ">
-                                {{error}}
-                            </small>
-                            {% endfor%}
-                        {% endif %}
-                        <p class="pt-3">{{field}}</p>     
-                </div>
-                {%endfor%}
-                <input type="submit" value="Create Portfolio" class="create-portfolio mb-3">
-            </form>
-        </div>
-        <div class="col-12 col-md-6">
-            
-            <h3 class="portfolio-header text-center">Areas To Contest For:</h3>
-            {% if portfolios %}
-            <ol class="portfolios">
-            {%for portfolio in portfolios%}
-                <li>{{portfolio.portfolio_name}}</li>
-            {%endfor%}    
-            </ol>
-            {%else%}
-            <p class="text-center text-white">No portfolio for this election</p>
-            {%endif%}
-        </div>
+
+<!-- end -->
+<div class="row">
+    <div class="col-12 col-lg-6">
+        <form method="POST" class="new-portfolio">
+            {% csrf_token %}
+            <h3 class="text-center pb-3 text-white display-1">PORTFOLIO CREATOR</h3>
+            {% for field in form %}         
+                   {% if field.errors %}
+                        {% for error in field.errors %}
+                        <small class="alert alert-danger pt-0 pb-0 text-center ">
+                            {{error}}
+                        </small>
+                        {% endfor%}
+                    {% endif %}
+                    <p class="m-0 text-white">Name:</p>
+                    <p class="pt-1">{{field}}</p>     
+            {%endfor%}
+            <button type="submit" class="btn btn-outline-light">Create Portfolio</button>    
+        </form>
     </div>
+    <div class="col-12 col-lg-6 mb-5 mt-5 m-lg-0">
+        <h3 class="portfolio-header text-white text-center display-1">PORTFOLIOS</h3>
+        {% if portfolios %}
+        <div class="old-portfolio scrollable-div">
+        <ol class="pt-4">
+        {%for portfolio in portfolios reversed%}
+            <li class="text-white">
+                <a href="" class="text-info">{{portfolio.portfolio_name}}</a>
+                [<a href="">Edit</a>
+                <a href="">Status</a>
+                <a href="">Delete</a>]
+            </li>   
+        {%endfor%}    
+        </ol>
+        </div>
+        {%else%}
+        <div class="text-center text-white no-portfolio">
+            <p>No portfolios for this election</p>
+        </div>
+        {%endif%}
+    </div>
+  </div>
+</div>
+<div class="mt-5">
+    {%include 'site_visual.html'%}
+</div>
+<!-- end -->
 </div>
 </main>
 {%endblock content%}

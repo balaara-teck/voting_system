@@ -13,43 +13,42 @@
     <div class="mb-5">
         {%include 'explore.html'%}
     </div>
-    <div class="container candidate-div">
-        <div class="row">
-          <div class="col-md-6 candidate-div">
-            <h3 class="text-center">Candidates Registration Form</h3>
+    <div class="container">
+        <div class="row mb-5">   
+          <div class="col-12 col-lg-6 candidate-form-holder">
+            <h3 class="text-center text-info display-1">CANDIDATES FORM</h3>
             <form method="POST" class="candidate-form">
               {% csrf_token %}
-              {% for field in form %}
-              <div class="form-group">
+              {% for field in form %}            
                 {% if field.errors %}
                   {% for error in field.errors %}
-                  <div class="alert alert-danger text-center" role="alert">
+                  <div class="alert alert-danger text-center m-0 p-0" role="alert">
                      {{error}}
                   </div>
                   {% endfor %}
                 {% endif %}
-                <p class="text-white">{{ field.label_tag }}</p>
-                {{ field }}
-              </div>
+                <p class="text-white m-0 p-0">{{ field.label_tag }}</p>
+                <p class="m-0 pb-3">{{ field }}</p>             
               {% endfor %}
-              <p style="margin:0 auto;" class="text-white ">Create more portfolios <a class="text-info mt-0" href="{% url 'portfolios' election.id %}">here</a></p>
-              <input type="submit" value="Register Candidate" class="btn btn-primary mb-5">
+              <button class="btn btn-outline-info">Register Candidate</button>
             </form>
           </div>
-          <div class="col-md-6">
-            <h3 class="text-center">Registered Candidates</h3>
+          <div class="col-12 col-lg-6 mb-5 mt-5 m-lg-0">
+            <h3 class="text-center text-info mb-0">REGISTERED CANDIDATES</h3>
             {% if candidates%}
-            <ol class="mt-4">
+            <div class="scrollable-div mt-0"> 
+            <ol class="mt-0">
               {% for candidate in candidates reversed %}
               <li class="candidates text-info mt-2">
-                {{ candidate.candidate.first_name }} {{ candidate.candidate.last_name }}-{{ candidate.portfolio_name.portfolio_name }}
+                <span>{{ candidate.candidate.first_name }} {{ candidate.candidate.last_name }}</span>
+                 <span class="text-white">{{ candidate.portfolio_name.portfolio_name }}</span>
               </li>
               {% endfor %}
             </ol>
+            </div>
             {%else%}
-             <div>
-                <p class="text-center text-white">You have no candidate for this election</p>
-                <p class="text-center text-white">You can register them <a href="{% url 'candidates' election.id%}">here</a></p>
+             <div class="scrollable">
+                <h3 class="text-center text-warning pt-5">You Have No Candidate For This Election</h3>
              </div>
             {%endif%}
           </div>

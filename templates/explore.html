@@ -36,7 +36,7 @@
         <div class="col d-none d-md-inline text-center text-white">
             {%if template == "my_voters.html"%}
             <strong>
-                <a href="{% url 'voter_register' election.id %}" class="text-info text-decoration-none">
+                <a href="{% url 'voter_register' election.id %}" class="text-white text-decoration-none">
                 Register Voter</a>        
             </strong> 
             {%else%}
@@ -51,14 +51,26 @@
             <a href="{% url 'my_elections' %}" class="text-decoration-none text-info"><strong>Switch Election</strong></a> 
         </div>
         <div class="col d-none d-md-inline text-center">
+            {% if template_name == "portfolio.html" %}
+            <a class="text-decoration-none text-info" href="{% url 'voter_register' election.id %}">  
+                <strong class="text-white">Register Voter</strong>
+                </a>
+            {%else%}
             <a class="text-decoration-none text-info" href="{% url 'portfolios' election.id %}">  
             <strong class="text-info">Create Portfolios</strong>
             </a> 
+            {%endif%}
         </div> 
         <div class="col d-none d-md-inline text-center">
+            {%if template_name == "candidate.html" %}
+            <a class="text-decoration-none text-info" href="{% url 'voter_register' election.id %}">
+                <strong class="text-white">Register Voter</strong>
+            </a>
+            {%else%}
             <a class="text-decoration-none text-info" href="{% url 'candidates' election.id %}">
                 <strong class="text-info">Register Candidates</strong>
             </a>
+            {%endif%}
         </div>
         <div class="col d-none d-md-inline text-center">
             <strong class="text-info">Start Voting</strong>

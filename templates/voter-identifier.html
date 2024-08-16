@@ -1,19 +1,50 @@
-<h1>Welcome to Bilotblitz voter identifier</h1>
+{%extends 'base_template.html'%}
+{% load static%}
+{%block title%}Voter Identifier | BilotBlitz{%endblock title%}
 
-<div>
-<form method="POST" novalidate>
-    {% csrf_token %}
-    {% for field in form %}
-        <div class="form-group">
-            {% if field.errors %}
-            {% for error in field.errors %}
-                <strong>{{ error }}</strong>
-            {% endfor %}
-            {% endif %}
-           <p>{{ field.label_tag }}</p> 
-            <p>{{ field }}</p>
-        </div>   
-    {% endfor %}
-    <button class="btn btn-primary btn-block mt-3 mb-2" type="submit">Access Election</button>
-</form>
+{%block header%}
+    <header>
+        {%include 'header.html'%}
+    </header>
+{%endblock header%}  
+
+{%block content%}
+<main class="voter-identifier-main">
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-6 polling-station text-center d-none d-md-block">
+            <h1 class="text-info display-1">Welcome!</h1>
+            <h1 class="text-info display-1">To</h1>
+            <h1 class="text-info">BilotBlitz Voting Center</h1> 
+            <strong class="text-warning">Your Gateway To Your Polling Station</strong>    
+           <!-- <img class="w-100" src="{% static 'images/image4.avif' %}" alt=""> -->
+        </div>
+        <div class="col-12 col-md-6">
+            <form method="POST" class="voter-credentials-form">
+                {% csrf_token %}
+                <h3 class="text-white mb-3">Your Credentials</h3>
+                {% for field in form %}
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <strong class="p-0 text-center alert alert-danger">{{ error|title }}</strong>
+                        {% endfor %}
+                    {% endif %}
+                    <div class="mb-4 field">
+                        <strong class="text-info m-0">{{ field.label_tag }}</strong> 
+                        <p class="mb-0">{{ field }}</p>
+                    </div>   
+                {% endfor %}
+                <button class="btn btn-outline-info mt-3 mb-2" type="submit">Access Election</button>
+            </form>
+        </div>
+        
+    </div>
 </div>
+{% include 'site_visual.html' %}
+</main>
+{%endblock content%}
+{%block footer%}
+<footer>
+    {%include "footer.html"%}
+</footer>
+{%endblock footer%}

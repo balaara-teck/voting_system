@@ -197,96 +197,144 @@ header {
 /* end for my_voters.html */
 
 /* styling for portfolio.html */
-.portfolio {
+.new-portfolio {
+    max-width: 400px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
 }
 
-.portfolio p input {
+.new-portfolio input {
     width: 100%;
-    background-color: rgb(53, 36, 36);
-    margin: auto auto;
+    background:linear-gradient(90deg, rgb(100, 100, 100),black,rgb(100, 100, 100));
     height: 35px;
-    border-radius:10px;
-    border: 1px solid white;
-    padding-left: 10px;
+    padding-left:10px;
 }
 
-.portfolio .create-portfolio {
-    background-color: green;
-    color: white;
-    width: 70%;
+.old-portfolio a {
+    text-decoration: none;
+    color: aquamarine;
+    
+}
+
+.old-portfolio {
     margin: auto auto;
-    border-radius: 20px;
-    border: 1px solid;
-    padding-left: 30px;
-}
-.portfolio .create-portfolio:hover {
-    width: 80%;
-    height: 30px;
+    max-width: 350px;
+    padding-left: 20px;
 }
 
-.portfolios li {
-    color: beige;
-}
-.portfolio-header,.candidate-div h3 {
-    color: rgb(224, 196, 255);
-}
-
-.portfolios {
+.no-portfolio {
+    height: 150px;
+    border:2px white solid;
+    border-radius: 50%;
     display: flex;
-    flex-wrap: wrap;
-    column-gap: 30px;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(90deg, rgb(100, 100, 100),black,rgb(100, 100, 100));
+}
+
+.no-portfolio:hover {
+    background: linear-gradient(90deg,black, rgb(100, 100, 100),rgb(100, 100, 100),black);
+    font-size: larger;
 }
 
 /* end of portfolio.html styling */
+/* styling voter-identifier.html */
+
+.voter-identifier-main {
+    background-image: url("images/image3.avif");
+}
+
+.voter-credentials-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    margin: 0 auto 150px auto;
+    border: 1px white solid;
+    padding: 10px 20px;
+    background:  linear-gradient(90deg, rgb(100, 100, 100),black,rgb(100, 100, 100));
+    box-shadow: -24px -23px 34px black;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+
+}
+
+.voter-credentials-form .field {
+    padding: 5px;
+}
+
+.voter-credentials-form .field:hover {
+    border-left: 3px rgb(245, 179, 200) solid;
+    border-top: 3px white solid;
+    border-right: 3px rgb(245, 179, 200) solid;
+}
+
+.voter-credentials-form input {
+    width: 100%;
+    height: 30px;
+    background-color: black;
+    font-weight: bold;
+    padding-left: 15px;
+}
+
+
+/* end of voter-identifier.html */
 
 /* styling of candidate.html */
 .candidate-form {
     display: flex;
     flex-direction: column;
-    row-gap: 20px;
+    max-width: 400px;
+    margin: 0 auto;
+    
 }
 
 .candidate-form input, .candidate-form select {
     width: 100%;
+    border:1px gray solid;
+    border-top-left-radius: 30px;
     height: 40px;
     padding-left: 20px;
-    background-color: rgb(76, 67, 67);
+    background:linear-gradient(90deg, rgb(100, 100, 100),rgb(160, 95, 95),rgb(100, 100, 100));
 }
 
-.candidate-div h3{
-
+.candidate-form option {
+    color: rgb(255, 225, 0);
+    background-color: black;
 }
-/* end fo candidate.html */
-/* beginning of index.html */
-
-#voter {
-    display: none;
-    max-width: 300px;
-    position: fixed;
-    top: auto;
-    bottom: auto;
-    left: 30%;
-    right: 30%;
-
-    
-}
-
-.vform {
+.candidates {
     display: flex;
-    flex-direction: column;
-    background-color: rgb(89, 78, 78);
-    color: beige;
-    z-index: 100;
-    border: 1px solid gainsboro;
-    padding:15px
+    justify-content: space-between;
 }
 
-.vform input {
-    width: 100%;
+.candidates:hover {
+   border: 1px gray solid;
 }
 
+.scrollable-div {
+    white-space: nowrap;
+}
+
+.scrollable-div,.scrollable {
+    height: 450px;; 
+    max-width: 400px;
+    margin: 0 auto;
+    overflow-y: auto; 
+    border: 1px solid #ccc; 
+    padding-right:10px;  
+    border-top-left-radius: 40px;
+    box-shadow: -30px -30px 20px rgba(213, 183, 139,.4);
+
+}
+
+
+
+
+/* end fo candidate.html */
+/* styling of index.html */
+
+
+/* end of styling of index.html */
 /* footer styling */
 
 .site-summary {
