@@ -1,0 +1,89 @@
+{% extends "index.html" %}
+{%load static%}
+
+{%block title%}Polling Station | BilotBlitz{%endblock title%}
+
+{%block header%} 
+    <header>
+        {% include "header.html" %}
+    </header>
+{%endblock header%}
+
+{%block content%}
+<main>
+  <div class="container">
+    <div class="row pb-5">
+      <div class="col-3 d-none d-xl-block current-candidates current-candidates-left">
+        <h2 class="text-white">Portfolios</h1>
+        <div class="">
+          {% for portfolio in areas_contested %}
+          <p class="{%if portfolio == area_contested%}text-warning{%else%} text-info{%endif%}">{{portfolio|title}}<p>
+        {%endfor%}
+        </div>
+      </div>
+      <div class="col current-candidates">
+      <form method="POST">
+        {% csrf_token %}
+        
+        <h1 class="text-warning text-center">Candidates Contesting For <span class="text-white">{{area_contested|title}}</span></h1>
+        <div class="candidate-profile">
+        {%for contestant in contestants%}
+        {%if no_of_contestants == 1 %}
+        <div style="border: 1px solid black; padding: 10px;">
+          <div class="text-white">
+            <div class="card" style="width: 18rem;">
+              <img src="{% static 'images/th.jpeg'%}" class="card-img-top" alt="Could Not Load Image">
+              <div class="card-body">
+                <p><strong>Name: </strong>{{contestant.candidate.first_name}} {{contestant.candidate.last_name}}</p>   
+              </div>
+            </div>
+          </div>
+            <strong>Only one candidate contested for {{area_contested}}, Click YES to vote for or NO if against.</strong>
+            <p><input type="radio" name="email" value="{{contestant.candidate.email}} yes">Yes</p>
+            <p><input type="radio" name="email" value="{{contestant.candidate.email}} no">No</p>
+        </div>
+        {%else%}
+        <div class="text-white mb-3">
+          <div class="card" style="width: 18rem;">
+            <img src="{% static 'images/th.jpeg'%}" class="card-img-top" alt="Could Not Load Image">
+            <div class="card-body">
+              <p><strong>Name: </strong>{{contestant.candidate.first_name}} {{contestant.candidate.last_name}}</p>
+              <p><strong>Sex: </strong>Male</p> 
+              <strong class="vote"><input type="radio" name="email" value="{{contestant.candidate.email}}">Vote</strong>  
+            </div>
+          </div>
+        </div>
+        {%endif%}
+        {%endfor%}
+      </div>
+        <button type="submit" class="btn btn-outline-warning submit-vote w-50">Submit Vote</button>
+      </form>
+    </div>
+    <div class="col-4 col-lg-3 col-xl-2  d-none d-md-block current-candidates current-candidates-right text-info">
+      <h2 class="text-white">Statistics</h1> 
+      <strong>Start Time:</strong>
+      <p>12:30 AM</p>
+      <strong>Closing Time:</strong> 
+      <p>06:30 PM</p>
+      <strong>Time Remaining:</strong> 
+      <p>4h:30 mins</p>
+      <strong>Total Voters:</strong>
+      <p>6000 Voters</p>
+      <strong>Have Voted:</strong>
+      <p>390</p>
+      <strong>Remaining Voters:</strong>
+      <p>2010</p>
+    </div>
+    </div>    
+  </div>
+  <div class="row">
+    {% include "site_visual.html" %}
+  </div>
+</main>
+{%endblock content%}
+
+{%block footer%}
+    <footer>
+        {%include "footer.html"%}
+    </footer>
+{%endblock footer%}

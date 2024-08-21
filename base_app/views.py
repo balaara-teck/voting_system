@@ -26,7 +26,7 @@ class AccessElectionView(View):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
-            election = form.cleaned_data['election_name'].upper()
+            election = form.cleaned_data['election_name'].lower()
             voter_id = form.cleaned_data['voter_id']
             email = form.cleaned_data['email']
 
@@ -45,7 +45,7 @@ class AccessElectionView(View):
         return render(request, self.template_name, {'form': form}) 
 
 class StartVotingView(View):
-    template_name = "start_voting.html"
+    template_name = "start-voting.html"
 
     def get(self, request, *args, **kwargs):
         election = request.session.get('election_name')
@@ -77,14 +77,14 @@ class StartVotingView(View):
             return redirect('start_voting')
 
         return render(request, self.template_name, {
-            'contestants': contestants,
-            'area_contested': current_portfolio,
+            "contestants": contestants,
+            "area_contested": current_portfolio,
             "no_of_contestants":no_of_contestants,
-            
+            "areas_contested":areas_contested
         })
 
     def post(self, request, *args, **kwargs):
-        voter_id = request.session.get('voter_id')
+        voter_id = request.session.get("voter_id")
         contestant_email = request.POST.get('email')
         if contestant_email:
             if "yes" in contestant_email or "no" in contestant_email:
@@ -245,7 +245,7 @@ class ElectorialCommissionOfficerView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        form.instance.election_name = form.instance.election_name.upper()
+        form.instance.election_name = form.instance.election_name.lower()
         if len(form.instance.election_name) < 3:
             form.add_error('election_name', f"{self.request.user.username.capitalize()}, at least three characters are required for election's name")
             return self.form_invalid(form)
